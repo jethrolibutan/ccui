@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import InvoiceItem from "./QuoteItem";
-import InvoiceModal from "./QuoteModal";
+import QuoteItem from "./QuoteItem";
+import QuoteModal from "./QuoteModal";
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class InvoiceForm extends React.Component {
                 <Col>
                   <Form.Label className="fw-bold">Bill from:</Form.Label>
                   <Form.Control
-                    placeholder={"Who is this invoice from?"}
+                    placeholder={"Who is this quote from?"}
                     rows={3}
                     value={this.state.billFrom}
                     type="text"
@@ -194,7 +194,7 @@ class InvoiceForm extends React.Component {
                 <Col>
                   <Form.Label className="fw-bold">Bill to:</Form.Label>
                   <Form.Control
-                    placeholder={"Who is this invoice to?"}
+                    placeholder={"Who is this quote to?"}
                     rows={3}
                     value={this.state.billTo}
                     type="text"
@@ -216,7 +216,7 @@ class InvoiceForm extends React.Component {
                   />
                 </Col>
               </Row>
-              <InvoiceItem
+              <QuoteItem
                 onItemizedItemEdit={this.onItemizedItemEdit.bind(this)}
                 onRowAdd={this.handleAddEvent.bind(this)}
                 onRowDel={this.handleRowDel.bind(this)}
@@ -259,9 +259,9 @@ class InvoiceForm extends React.Component {
                 type="submit"
                 className="d-block w-100 btn-secondary"
               >
-                Review Invoice
+                Finalize Quote
               </Button>
-              <InvoiceModal
+              <QuoteModal
                 showModal={this.state.isOpen}
                 closeModal={this.closeModal}
                 info={this.state}

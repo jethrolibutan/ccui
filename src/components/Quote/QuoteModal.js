@@ -46,7 +46,7 @@ class InvoiceModal extends React.Component {
                   {this.props.info.billFrom || "John Uberbacher"}
                 </h4>
                 <h6 className="fw-bold text-secondary mb-1">
-                  Invoice #: {this.props.info.invoiceNumber || ""}
+                  Quote #: {this.props.info.invoiceNumber || ""}
                 </h6>
               </div>
               <div className="text-end ms-4">
@@ -111,37 +111,7 @@ class InvoiceModal extends React.Component {
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                   </tr>
-                  <tr className="text-end">
-                    <td></td>
-                    <td className="fw-bold" style={{ width: "100px" }}>
-                      SUBTOTAL
-                    </td>
-                    <td className="text-end" style={{ width: "100px" }}>
-                      {this.props.currency} {this.props.subTotal}
-                    </td>
-                  </tr>
-                  {this.props.taxAmmount != 0.0 && (
-                    <tr className="text-end">
-                      <td></td>
-                      <td className="fw-bold" style={{ width: "100px" }}>
-                        TAX
-                      </td>
-                      <td className="text-end" style={{ width: "100px" }}>
-                        {this.props.currency} {this.props.taxAmmount}
-                      </td>
-                    </tr>
-                  )}
-                  {this.props.discountAmmount != 0.0 && (
-                    <tr className="text-end">
-                      <td></td>
-                      <td className="fw-bold" style={{ width: "100px" }}>
-                        DISCOUNT
-                      </td>
-                      <td className="text-end" style={{ width: "100px" }}>
-                        {this.props.currency} {this.props.discountAmmount}
-                      </td>
-                    </tr>
-                  )}
+
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{ width: "100px" }}>
