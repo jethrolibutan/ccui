@@ -41,6 +41,7 @@ function Navbar() {
               Dashboard
             </Button>
             <Button
+              href="/inventory"
               color="inherit"
               variant="text"
               size="large"
@@ -49,6 +50,7 @@ function Navbar() {
               Inventory
             </Button>
             <Button
+              href="/invoice"
               color="inherit"
               variant="text"
               size="large"
@@ -57,6 +59,7 @@ function Navbar() {
               Invoice
             </Button>
             <Button
+              href="/quote"
               color="inherit"
               variant="text"
               size="large"
@@ -65,6 +68,7 @@ function Navbar() {
               Quote
             </Button>
             <Button
+              href="/timeclock"
               color="inherit"
               variant="text"
               size="large"
@@ -73,6 +77,7 @@ function Navbar() {
               Time Clock
             </Button>
             <Button
+              href="/profile"
               color="inherit"
               variant="text"
               size="large"
