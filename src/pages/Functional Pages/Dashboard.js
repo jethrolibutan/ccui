@@ -9,8 +9,6 @@ import "./Dashboard.css";
 function Dashboard() {
   return (
     <div>
-      {" "}
-      Welcome Matt!
       <div className="dashboard-column">
         <div className="dashboard-row">
           <div className="card">
