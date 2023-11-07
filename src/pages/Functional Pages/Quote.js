@@ -4,7 +4,6 @@ import QuoteForm from "../../components/Quote/QuoteForm";
 function Quote() {
   return (
     <div>
-      quote
       <QuoteForm />
     </div>
   );
