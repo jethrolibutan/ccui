@@ -32,7 +32,7 @@ function Navbar() {
 
           <Stack direction="row" spacing={2}>
             <Button
-              href="/"
+              href="/dashboard"
               color="inherit"
               variant="text"
               size="large"
