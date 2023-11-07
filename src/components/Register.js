@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Register.css";
 
-export const Register = (props) => {
+function Register() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
@@ -15,12 +15,13 @@ export const Register = (props) => {
   };
 
   const goToLogin = () => {
-    navigate("/");
+    navigate("/login");
   };
   return (
     <div className="form-page">
-      <h2>Register</h2>
       <div className="auth-form-container">
+        {" "}
+        <h2>Register</h2>{" "}
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="name">Full name</label>
           <input
@@ -57,4 +58,6 @@ export const Register = (props) => {
       </button>
     </div>
   );
-};
+}
+
+export default Register;

@@ -1,6 +1,6 @@
 import LandingPage from "./pages/Landing Pages/LandingPage";
-import Login from "./pages/LoginPage/Login";
-import Register from "./pages/Register Page/Register";
+import Login from "./pages/Landing Pages/Login";
+import Register from "./pages/Landing Pages/Register";
 import DefaultLayout from "./components/layouts/DefaultLayout";
 import Dashboard from "./pages/Functional Pages/Dashboard";
 import Inventory from "./pages/Functional Pages/Inventory";

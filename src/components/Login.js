@@ -17,12 +17,17 @@ function Login() {
     navigate("/register");
   };
 
+  const handleLogin = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="form-page">
-      <div>
-        <h2>Sign in to Contractor Control</h2>
-      </div>
       <div className="auth-form-container">
+        <div>
+          {" "}
+          <h1> Login </h1>{" "}
+        </div>
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="email">Email Address</label>
           <input
@@ -42,7 +47,9 @@ function Login() {
             id="password"
             name="password"
           />
-          <button type="submit">Log In</button>
+          <button type="submit" onClick={handleLogin}>
+            Log In
+          </button>
         </form>
         <button className="link-btn" onClick={goToRegister}>
           Don't have an account? Register here.

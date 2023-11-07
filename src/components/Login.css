@@ -2,27 +2,63 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  min-height: 90vh;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   color: black;
-  background-image: white;
+  background-color: #c0bcbc;
 }
 
-.auth-form-container,
+/* .auth-form-container,
 .login-form,
 .register-form {
   display: flex;
   flex-direction: column;
+} */
+
+.auth-form-container, .login-form,
+.register-form{
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@media screen and (min-width: 600px) {
-  .auth-form-container {
-    padding: 3rem;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin: 0.5rem;
-  }
+
+.login-form label,
+.login-form input {
+  margin: 10px 0;
+}
+
+.submit {
+
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #005b94;
+}
+
+.link-btn {
+  text-decoration: underline;
+  color: #0077b6;
+  cursor: pointer;
+  background: none;
+  color: black;
+
+}
+
+.link-btn:hover {
+  color: #005b94;
 }
 
 label {
@@ -40,7 +76,7 @@ input {
 
 button {
   border: none;
-  background-color: rgb(14, 185, 14);
+  background-color: #0b8aeb;
   padding: 1.5em;
   border-radius: 10px;
   margin: 0.5rem 0;
@@ -48,8 +84,3 @@ button {
   color: white;
 }
 
-.link-btn {
-  background: none;
-  color: black;
-  text-decoration: underline;
-}
