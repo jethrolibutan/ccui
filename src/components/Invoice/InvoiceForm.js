@@ -72,37 +72,18 @@ class InvoiceForm extends React.Component {
       ).toFixed(2);
     });
 
-    this.setState(
-      {
-        subTotal: parseFloat(subTotal).toFixed(2),
-      },
-      () => {
-        this.setState(
-          {
-            taxAmmount: parseFloat(
-              parseFloat(subTotal) * (this.state.taxRate / 100)
-            ).toFixed(2),
-          },
-          () => {
-            this.setState(
-              {
-                discountAmmount: parseFloat(
-                  parseFloat(subTotal) * (this.state.discountRate / 100)
-                ).toFixed(2),
-              },
-              () => {
-                this.setState({
-                  total:
-                    subTotal -
-                    this.state.discountAmmount +
-                    parseFloat(this.state.taxAmmount),
-                });
-              }
-            );
-          }
-        );
-      }
-    );
+    this.setState(() => {
+      this.setState(() => {
+        this.setState(() => {
+          this.setState({
+            total:
+              subTotal -
+              this.state.discountAmmount +
+              parseFloat(this.state.taxAmmount),
+          });
+        });
+      });
+    });
   }
   onItemizedItemEdit(evt) {
     var item = {
@@ -244,34 +225,6 @@ class InvoiceForm extends React.Component {
               />
               <Row className="mt-4 justify-content-end">
                 <Col lg={6}>
-                  <div className="d-flex flex-row align-items-start justify-content-between">
-                    <span className="fw-bold">Subtotal:</span>
-                    <span>
-                      {this.state.currency}
-                      {this.state.subTotal}
-                    </span>
-                  </div>
-                  <div className="d-flex flex-row align-items-start justify-content-between mt-2">
-                    <span className="fw-bold">Discount:</span>
-                    <span>
-                      <span className="small ">
-                        ({this.state.discountRate || 0}%)
-                      </span>
-                      {this.state.currency}
-                      {this.state.discountAmmount || 0}
-                    </span>
-                  </div>
-                  <div className="d-flex flex-row align-items-start justify-content-between mt-2">
-                    <span className="fw-bold">Tax:</span>
-                    <span>
-                      <span className="small ">
-                        ({this.state.taxRate || 0}%)
-                      </span>
-                      {this.state.currency}
-                      {this.state.taxAmmount || 0}
-                    </span>
-                  </div>
-                  <hr />
                   <div
                     className="d-flex flex-row align-items-start justify-content-between"
                     style={{

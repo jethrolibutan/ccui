@@ -9,18 +9,16 @@
   background-color: #c0bcbc;
 }
 
-/* .auth-form-container,
+.auth-form-container,
 .login-form,
 .register-form {
   display: flex;
   flex-direction: column;
-} */
+}
 
-.auth-form-container, .login-form,
-.register-form{
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.auth-form-container,
+.login-form,
+.register-form {
   padding: 20px;
   width: 300px;
   display: flex;
@@ -28,14 +26,12 @@
   align-items: center;
 }
 
-
 .login-form label,
 .login-form input {
   margin: 10px 0;
 }
 
 .submit {
-
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -54,7 +50,6 @@
   cursor: pointer;
   background: none;
   color: black;
-
 }
 
 .link-btn:hover {
@@ -83,4 +78,3 @@ button {
   cursor: pointer;
   color: white;
 }
-
