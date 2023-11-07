@@ -13,8 +13,7 @@ import {
   useTheme,
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
-
-import AgricultureIcon from "@mui/icons-material/Agriculture";
+import BuildIcon from "@mui/icons-material/Build";
 
 function Navbar() {
   const [anchorElm, setAnchorElm] = useState(null);
@@ -80,7 +79,7 @@ function Navbar() {
             color="inherit"
             aria-label="logo"
           >
-            <AgricultureIcon />
+            <BuildIcon />
           </IconButton>
           <Typography size="large" edge="start" marginRight="auto" variant="h5">
             Contractor Control
@@ -99,7 +98,7 @@ function Navbar() {
                   size="large"
                   sx={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  Home
+                  Dashboard
                 </Button>
                 <Button
                   onClick={handleClick}
@@ -108,101 +107,45 @@ function Navbar() {
                   size="large"
                   sx={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  ABOUT{" "}
+                  Inventory
                 </Button>
                 <Button
-                  onClick={handleClickRes}
+                  onClick={handleClick}
                   color="inherit"
                   variant="text"
                   size="large"
                   sx={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  RESOURCES
+                  Invoice
                 </Button>
                 <Button
-                  onClick={handleClickImpact}
+                  onClick={handleClick}
                   color="inherit"
                   variant="text"
                   size="large"
                   sx={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  {" "}
-                  IMPACT{" "}
+                  Quote
                 </Button>
                 <Button
-                  onClick={handleClickContact}
+                  onClick={handleClick}
                   color="inherit"
                   variant="text"
                   size="large"
                   sx={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  CONTACT US
+                  Time Clock
+                </Button>
+                <Button
+                  onClick={handleClick}
+                  color="inherit"
+                  variant="text"
+                  size="large"
+                  sx={{ fontSize: "20px", fontWeight: "500" }}
+                >
+                  Profile
                 </Button>
               </Stack>
-
-              <Menu anchorEl={anchorElm} open={open} onClose={handleClose}>
-                <MenuItem component={Link} href="/whatWeDo">
-                  WHAT WE DO
-                </MenuItem>
-                <MenuItem component={Link} href="/meetTheTeam">
-                  MEET THE TEAM
-                </MenuItem>
-                <MenuItem component={Link} href="/support">
-                  SUPPORT
-                </MenuItem>
-                <MenuItem component={Link} href="/partners">
-                  PARTNERS
-                </MenuItem>
-                <MenuItem component={Link} href="/programs">
-                  PROGRAMS
-                </MenuItem>
-              </Menu>
-
-              <Menu
-                anchorEl={anchorResElm}
-                open={openRes}
-                onClose={handleCloseRes}
-              >
-                <MenuItem component={Link} href="/recipes">
-                  RECIPES & NUTRITION FACTS
-                </MenuItem>
-                <MenuItem component={Link} href="/exercises">
-                  PHYSICAL ACTIVITY RESOURCES
-                </MenuItem>
-                <MenuItem component={Link} href="/training">
-                  TRAINING
-                </MenuItem>
-              </Menu>
-
-              <Menu
-                anchorEl={anchorImpactElm}
-                open={openImpact}
-                onClose={handleCloseImpact}
-                backgroundColor="green"
-              >
-                <MenuItem component={Link} href="/publications">
-                  PUBLICATIONS
-                </MenuItem>
-                <MenuItem component={Link} href="/inTheNews">
-                  IN THE NEWS
-                </MenuItem>
-              </Menu>
-
-              <Menu
-                anchorEl={anchorContactElm}
-                open={openContact}
-                onClose={handleCloseContact}
-              >
-                <MenuItem component={Link} href="/donate">
-                  {" "}
-                  DONATE
-                </MenuItem>
-
-                <MenuItem component={Link} href="/getInvolved">
-                  {" "}
-                  GET INVOLVED{" "}
-                </MenuItem>
-              </Menu>
             </>
           )}
         </Toolbar>

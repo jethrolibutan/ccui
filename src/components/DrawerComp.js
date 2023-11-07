@@ -49,11 +49,6 @@ function DrawerComp() {
   // These two variables control the opening of "About" dropdown menu
   const [openContact, setOpenContact] = React.useState(false);
 
-  // Function that handles the click of the opening of a drop down menu
-  const handleClickContact = () => {
-    setOpenContact(!openContact);
-  };
-
   return (
     <div>
       <Drawer
