@@ -1,4 +1,4 @@
-import LandingPage from "./pages/Landing Page/LandingPage";
+import LandingPage from "./pages/Landing Pages/LandingPage";
 import Login from "./pages/LoginPage/Login";
 import Register from "./pages/Register Page/Register";
 import DefaultLayout from "./components/layouts/DefaultLayout";
@@ -15,10 +15,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route index element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<DefaultLayout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/invoice" element={<Invoice />} />
