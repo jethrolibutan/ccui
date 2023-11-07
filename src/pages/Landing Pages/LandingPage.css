@@ -1,4 +1,8 @@
 .landing-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-image: url('/public/images/landing.jpg'); 
     background-size: cover; 
     background-repeat: no-repeat;
@@ -14,4 +18,3 @@
 
     color: rgb(255, 255, 255);
   }
-  
