@@ -1,8 +1,13 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
+import "./LandingPage.css";
 
 function LandingPage() {
-  return <div>THIS IS THE LANDING PAGE</div>;
+  return (
+    <div className="landing-page">
+      {" "}
+      <h1>Welcome to Contractor Control</h1>
+    </div>
+  );
 }
 
 export default LandingPage;
