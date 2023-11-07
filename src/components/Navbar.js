@@ -19,6 +19,7 @@ function Navbar() {
       >
         <Toolbar>
           <IconButton
+            href="/dashboard"
             size="medium"
             edge="start"
             color="inherit"
