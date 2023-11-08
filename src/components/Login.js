@@ -15,6 +15,8 @@ function Login() {
 
   const handleLogin = () => {
     navigate("/dashboard");
+    console.log(email);
+    console.log(password);
   };
 
   const loginUser = async (event) => {
