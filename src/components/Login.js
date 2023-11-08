@@ -4,14 +4,10 @@ import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
+  const [userInvalid, setUserInvalid] = useState(false);
 
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
-  };
 
   const goToRegister = () => {
     navigate("/register");
@@ -21,6 +17,42 @@ function Login() {
     navigate("/dashboard");
   };
 
+  const loginUser = async (event) => {
+    event.preventDefault();
+
+    const apiUrl = "123";
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    };
+
+    const loginRequest = await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (
+          data.message === "Invalid email" ||
+          data.message === "Incorrect Password"
+        ) {
+          setUserInvalid(true);
+        } else {
+          const jwtToken = data.jwt; // Assuming the response contains a field named "jwt" with the JWT token.
+          localStorage.setItem("jwt", jwtToken); // Store the JWT token in the localStorage.
+          localStorage.setItem("jwt-exp", Date.now() + 2 * 60 * 60 * 1000); // expiration is checked in Navbar component
+          navigate("/myaccount/");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
   return (
     <div className="form-page">
       <div className="auth-form-container">
@@ -28,7 +60,7 @@ function Login() {
           {" "}
           <h1> Login </h1>{" "}
         </div>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form">
           <label htmlFor="email">Email Address</label>
           <input
             value={email}
@@ -40,8 +72,8 @@ function Login() {
           />
           <label htmlFor="password">Password</label>
           <input
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="********"
             id="password"
