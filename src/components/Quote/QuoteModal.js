@@ -46,7 +46,7 @@ class InvoiceModal extends React.Component {
                   {this.props.info.billFrom || "John Uberbacher"}
                 </h4>
                 <h6 className="fw-bold text-secondary mb-1">
-                  Quote #: {this.props.info.invoiceNumber || ""}
+                  Quote #: {this.props.info.quoteNumber || ""}
                 </h6>
               </div>
               <div className="text-end ms-4">

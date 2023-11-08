@@ -149,13 +149,11 @@ class InvoiceForm extends React.Component {
                   </div>
                 </div>
                 <div className="d-flex flex-row align-items-center">
-                  <span className="fw-bold me-2">
-                    Invoice&nbsp;Number:&nbsp;
-                  </span>
+                  <span className="fw-bold me-2">Quote&nbsp;Number:&nbsp;</span>
                   <Form.Control
                     type="number"
-                    value={this.state.invoiceNumber}
-                    name={"invoiceNumber"}
+                    value={this.state.quoteNumber}
+                    name={"quoteNumber"}
                     onChange={(event) => this.editField(event)}
                     min="1"
                     style={{

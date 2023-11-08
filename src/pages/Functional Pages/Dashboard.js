@@ -49,7 +49,7 @@ function Dashboard() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/images/PNL.jpg"
+                  image="/images/inventorypicture.jpg"
                   alt="Inventory"
                 />
 
@@ -73,7 +73,7 @@ function Dashboard() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/images/PNL.jpg"
+                  image="/images/invoice.jpg"
                   alt="Invoice"
                 />
 
@@ -99,7 +99,7 @@ function Dashboard() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/images/PNL.jpg"
+                  image="/images/quote.jpg"
                   alt="Quote"
                 />
 
@@ -123,7 +123,7 @@ function Dashboard() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/images/PNL.jpg"
+                  image="/images/clock.jpg"
                   alt="Time Clock"
                 />
 
