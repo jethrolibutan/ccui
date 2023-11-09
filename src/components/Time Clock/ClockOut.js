@@ -1,9 +1,10 @@
 import React from "react";
+import "./ClockOut.css";
 
 function ClockOut() {
   return (
     <div>
-      <button type="submit">Clock Out</button>
+      <button className="clock-out">Clock Out</button>
     </div>
   );
 }
