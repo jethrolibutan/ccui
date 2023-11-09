@@ -1,0 +1,36 @@
+.clock-in {
+  margin: 1em;
+  margin-right: 1em;
+
+  border: none;
+
+  background-color: rgb(14, 185, 14);
+  padding: 1.5em;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  color: white;
+}
+
+.clock-out {
+  margin: 1em;
+  margin-left: 1em;
+
+  border: none;
+
+  background-color: rgb(236, 23, 23);
+  padding: 1.5em;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  color: white;
+}
+
+.button-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
