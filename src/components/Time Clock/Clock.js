@@ -15,7 +15,9 @@ function ClockIn() {
 
   const handleClockIn = () => {
     if (hasInput) {
-      toast.success(`Clock In ID: ${employeeID}`);
+      toast.success(
+        `You have successfully clocked in Employee ID: ${employeeID}`
+      );
     } else {
       toast.error("Please enter an ID before clocking in.");
     }
@@ -23,11 +25,35 @@ function ClockIn() {
 
   const handleClockOut = () => {
     if (hasInput) {
-      toast.success(`Clock Out ID: ${employeeID}`);
+      toast.success(
+        `You have successfully clocked out Employee ID: ${employeeID}`
+      );
     } else {
       toast.error("Please enter an ID before clocking in.");
     }
   };
+
+  // const clockInUser = async (event) => {
+
+  //   event.preventDefault();
+
+  //   const apiUrl = "679";
+  //   const clockInData = {
+  //     employeeID: employeeID,
+  //   };
+
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       clockInData: clockInData}),
+  //   };
+
+  //   const clockInRequest = await fetch(apiUrl, requestOptions)
+
+  //     .then((response) => response.json())
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center w-100">

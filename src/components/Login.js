@@ -22,7 +22,7 @@ function Login() {
   const loginUser = async (event) => {
     event.preventDefault();
 
-    const apiUrl = "123";
+    const apiUrl = "http://localhost:8000/api/login/";
     const loginData = {
       email: email,
       password: password,
@@ -49,7 +49,7 @@ function Login() {
           const jwtToken = data.jwt; // Assuming the response contains a field named "jwt" with the JWT token.
           localStorage.setItem("jwt", jwtToken); // Store the JWT token in the localStorage.
           localStorage.setItem("jwt-exp", Date.now() + 2 * 60 * 60 * 1000); // expiration is checked in Navbar component
-          navigate("/myaccount/");
+          navigate("/dashboard");
         }
       })
       .catch((error) => console.error("Error:", error));
@@ -81,7 +81,7 @@ function Login() {
             id="password"
             name="password"
           />
-          <button type="submit" onClick={handleLogin}>
+          <button type="submit" onClick={loginUser}>
             Log In
           </button>
         </form>
