@@ -26,6 +26,21 @@
   color: white;
 }
 
+.employee-id {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.employee-text {
+  margin-right: 1em;
+}
+
+.employee-input {
+  margin-left: 1em;
+}
+
 .button-list {
   display: flex;
   flex-direction: row;

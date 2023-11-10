@@ -1,35 +1,53 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Clock.css";
 
 function ClockIn() {
-  // State to store the employee ID
   const [employeeID, setEmployeeID] = useState("");
+  const [hasInput, setHasInput] = useState(false);
 
-  // Function to handle changes in the input field
   const handleIdChange = (e) => {
+    const inputText = e.target.value;
     setEmployeeID(e.target.value);
+    setHasInput(!!inputText.trim());
   };
 
-  // Function to handle the clock in action
   const handleClockIn = () => {
-    // You can use the employeeId state here for further processing
-    console.log("Clock In ID:", employeeID);
+    if (hasInput) {
+      toast.success(`Clock In ID: ${employeeID}`);
+    } else {
+      toast.error("Please enter an ID before clocking in.");
+    }
   };
 
-  // Function to handle the clock out action
   const handleClockOut = () => {
-    // You can use the employeeId state here for further processing
-    console.log("Clock Out ID:", employeeID);
+    if (hasInput) {
+      toast.success(`Clock Out ID: ${employeeID}`);
+    } else {
+      toast.error("Please enter an ID before clocking in.");
+    }
   };
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center w-100">
-      <input
-        type="text"
-        placeholder="Enter ID"
-        value={employeeID}
-        onChange={handleIdChange}
-      />
+      <div className="employee-id">
+        <div className="employee-text"> Enter Employee ID here: </div>
+        <input
+          type="text"
+          placeholder="Enter ID"
+          value={employeeID}
+          onChange={handleIdChange}
+          className="employee-input"
+          style={{
+            border: "none",
+            borderBottom: "1px solid #000",
+            borderRadius: "0",
+            outline: "none",
+            marginBottom: "10px",
+          }}
+        />{" "}
+      </div>
 
       <div className="button-list">
         <button
@@ -47,6 +65,8 @@ function ClockIn() {
           Clock Out
         </button>
       </div>
+
+      <ToastContainer />
     </div>
   );
 }
