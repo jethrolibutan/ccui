@@ -23,39 +23,37 @@ function Register() {
     if (password != confirmedPassword) {
       setPasswordMatch(false);
     } else {
-      const userRequest = await axios
-        .post("http://localhost:8000/api/register/", {
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          password: password,
-        })
-        .catch((error) => {
-          // handle error
-          console.error(error);
-          // Check if the error status is 505
-          if (error.response && error.response.status === 505) {
-            console.log("Email already taken");
-
-            setEmailTaken(true);
-            setEmail("");
-
-            if (emailTaken === true) {
-              setSuccessfulCreation(false);
-            }
-          } else {
-            setSuccessfulCreation(true);
-            setTimeout(() => navigate("/login"), 2000);
+      try {
+        const userRequest = await axios.post(
+          "http://localhost:8000/api/register/",
+          {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password: password,
           }
-        });
-    }
+        );
 
-    if (succesfulCreation === false) {
-      console.log("User was not created");
-      setEmail("");
-    } else if (succesfulCreation === true) {
-      console.log("User was created");
-      setTimeout(() => navigate("/login"), 2000);
+        setSuccessfulCreation(true);
+        setEmailTaken(false);
+        setEmail(""); // Clear the email input after successful registration
+        setTimeout(() => navigate("/login"), 2000);
+        console.log("User was created");
+      } catch (error) {
+        // handle error
+        console.error(error);
+        // Check if the error status is 505
+        if (error.response && error.response.status === 505) {
+          console.log("Email already taken");
+
+          setEmailTaken(true);
+          setEmail("");
+
+          if (emailTaken === true) {
+            setSuccessfulCreation(false);
+          }
+        }
+      }
     }
   };
 
