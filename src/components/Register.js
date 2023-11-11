@@ -7,10 +7,12 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState("");
+
   const [firstName, setFirstName] = useState("");
-  const [lasttName, setLastName] = useState("");
-  const [emailTaken, setEmailTaken] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [emailTaken, setEmailTaken] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const [succesfulCreation, setSuccessfulCreation] = useState(false);
 
   const navigate = useNavigate();
@@ -21,10 +23,15 @@ function Register() {
     if (password != confirmedPassword) {
       setPasswordMatch(false);
     } else {
-      const userRequest = await axios.post("", {
-        username: email,
-        password: password,
-      });
+      const userRequest = await axios.post(
+        "http://localhost:8000/api/register/",
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+        }
+      );
 
       console.log(userRequest.data.message);
 
@@ -48,7 +55,7 @@ function Register() {
       <div id="error messages">
         {emailTaken ? (
           <p className="text-red-500 text-center mb-2">
-            The email you entered is already in use
+            The email you entered is already in use!
           </p>
         ) : null}
         {!passwordMatch ? (
