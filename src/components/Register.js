@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import "./Register.css";
@@ -11,7 +11,7 @@ function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const [emailTaken, setEmailTaken] = useState(false);
+  const [emailTaken, setEmailTaken] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [succesfulCreation, setSuccessfulCreation] = useState(false);
 
@@ -23,26 +23,38 @@ function Register() {
     if (password != confirmedPassword) {
       setPasswordMatch(false);
     } else {
-      const userRequest = await axios.post(
-        "http://localhost:8000/api/register/",
-        {
+      const userRequest = await axios
+        .post("http://localhost:8000/api/register/", {
           first_name: firstName,
           last_name: lastName,
           email: email,
           password: password,
-        }
-      );
+        })
+        .catch((error) => {
+          // handle error
+          console.error(error);
+          // Check if the error status is 505
+          if (error.response && error.response.status === 505) {
+            console.log("Email already taken");
 
-      console.log(userRequest.data.message);
+            setEmailTaken(true);
+            setEmail("");
 
-      /**
-       * Handling errors from API response
-       */
-      if (userRequest.data.message === "Email is already taken") {
-        setEmailTaken(true);
-      }
+            if (emailTaken === true) {
+              setSuccessfulCreation(false);
+            }
+          } else {
+            setSuccessfulCreation(true);
+            setTimeout(() => navigate("/login"), 2000);
+          }
+        });
+    }
 
-      setSuccessfulCreation(true);
+    if (succesfulCreation === false) {
+      console.log("User was not created");
+      setEmail("");
+    } else if (succesfulCreation === true) {
+      console.log("User was created");
       setTimeout(() => navigate("/login"), 2000);
     }
   };
