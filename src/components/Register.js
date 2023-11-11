@@ -8,7 +8,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lasttName, setLastName] = useState("");
   const [emailTaken, setEmailTaken] = useState("");
   const [succesfulCreation, setSuccessfulCreation] = useState(false);
 
@@ -60,13 +61,21 @@ function Register() {
         {" "}
         <h2>Register</h2>{" "}
         <form className="login-form" onSubmit={registerUser}>
-          <label htmlFor="name">Full name</label>
+          <label htmlFor="name">First Name</label>
           <input
-            value={name}
+            value={firstName}
             name="name"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
             id="name"
-            placeholder="full Name"
+            placeholder="First Name"
+          />
+          <label htmlFor="name">Last Name</label>
+          <input
+            value={lastName}
+            name="name"
+            onChange={(e) => setLastName(e.target.value)}
+            id="name"
+            placeholder="Last Name"
           />
           <label htmlFor="email">email</label>
           <input

@@ -7,9 +7,44 @@ import {
   IconButton,
 } from "@mui/material";
 
+import { Navigate, useNavigate } from "react-router-dom";
+
 import BuildIcon from "@mui/icons-material/Build";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const logOutUser = async (event) => {
+    event.preventDefault();
+
+    const apiUrl = "http://localhost:8000/api/logout/";
+
+    const logOutData = {
+      jwt: localStorage.getItem("jwt"),
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(logOutData),
+    };
+
+    const handleLogout = await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        if (data.message === "Successfully Logged Out") {
+          console.log("You have been logged out!");
+          localStorage.clear();
+          navigate("/");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
   return (
     <div>
       <AppBar
@@ -85,6 +120,15 @@ function Navbar() {
               sx={{ fontSize: "20px", fontWeight: "500" }}
             >
               Profile
+            </Button>
+            <Button
+              color="inherit"
+              variant="text"
+              size="large"
+              sx={{ fontSize: "20px", fontWeight: "500" }}
+              onClick={logOutUser}
+            >
+              Sign Out
             </Button>
           </Stack>
         </Toolbar>
