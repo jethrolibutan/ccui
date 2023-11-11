@@ -37,7 +37,7 @@ function Register() {
         setSuccessfulCreation(true);
         setEmailTaken(false);
         setEmail(""); // Clear the email input after successful registration
-        setTimeout(() => navigate("/login"), 2000);
+        setTimeout(() => navigate("/addEmployee"), 2000);
         console.log("User was created");
       } catch (error) {
         // handle error
