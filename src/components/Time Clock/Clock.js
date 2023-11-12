@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import "./Clock.css";
 
@@ -13,47 +14,57 @@ function ClockIn() {
     setHasInput(!!inputText.trim());
   };
 
-  const handleClockIn = () => {
-    if (hasInput) {
-      toast.success(
-        `You have successfully clocked in Employee ID: ${employeeID}`
-      );
+  const clockInUser = async (event) => {
+    if(hasInput){
+      event.preventDefault();
+      try{
+        const userRequest = await axios.post(
+          "http://localhost:8000/api/clock-in/",
+          {
+            jwt: localStorage.getItem("jwt"),
+            employee_id: employeeID,
+          }
+        );
+        setEmployeeID("");
+        console.log("User was clocked in");
+        toast.success(`Employee #${employeeID} was clocked in`);
+      } catch (error) {
+        console.error(error);
+        if (error.response && error.response.status === 400) {
+          console.log("Employee ID does not exist");
+          toast.error("Employee ID does not exist");
+        }
+      }
     } else {
       toast.error("Please enter an ID before clocking in.");
     }
   };
 
-  const handleClockOut = () => {
-    if (hasInput) {
-      toast.success(
-        `You have successfully clocked out Employee ID: ${employeeID}`
-      );
+  const clockOutUser = async (event) => {
+    if(hasInput){
+      event.preventDefault();
+      try{
+        const userRequest = await axios.post(
+          "http://localhost:8000/api/clock-out/",
+          {
+            jwt: localStorage.getItem("jwt"),
+            employee_id: employeeID,
+          }
+        );
+        setEmployeeID("");
+        console.log("User was clocked out");
+        toast.success(`Employee #${employeeID} was clocked out`);
+      } catch (error) {
+        console.error(error);
+        if (error.response && error.response.status === 400) {
+          console.log("Employee ID does not exist");
+          toast.error("Employee ID does not exist");
+        }
+      }
     } else {
-      toast.error("Please enter an ID before clocking in.");
+      toast.error("Please enter an ID before clocking out.");
     }
   };
-
-  // const clockInUser = async (event) => {
-
-  //   event.preventDefault();
-
-  //   const apiUrl = "679";
-  //   const clockInData = {
-  //     employeeID: employeeID,
-  //   };
-
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       clockInData: clockInData}),
-  //   };
-
-  //   const clockInRequest = await fetch(apiUrl, requestOptions)
-
-  //     .then((response) => response.json())
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center w-100">
@@ -79,14 +90,14 @@ function ClockIn() {
         <button
           className="clock-in"
           style={{ marginRight: "1em" }}
-          onClick={handleClockIn}
+          onClick={clockInUser}
         >
           Clock In
         </button>
         <button
           className="clock-out"
           style={{ marginLeft: "1em" }}
-          onClick={handleClockOut}
+          onClick={clockOutUser}
         >
           Clock Out
         </button>
