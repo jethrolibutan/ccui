@@ -34,11 +34,16 @@ function Register() {
           }
         );
 
+        const { jwt } = userRequest.data;
+
+        console.log(userRequest.data);
+
+        // Store the JWT token in local storage
+        localStorage.setItem("jwt", jwt);
+
         setSuccessfulCreation(true);
         setEmailTaken(false);
         setEmail(""); // Clear the email input after successful registration
-
-        // Store the JWT Token in the localStorage
 
         setTimeout(() => navigate("/addEmployee"), 2000);
         console.log("User was created");
