@@ -9,8 +9,11 @@ import Quote from "./pages/Functional Pages/Quote";
 import TimeClock from "./pages/Functional Pages/TimeClock";
 import Profile from "./pages/Functional Pages/ProfilePage";
 import AddEmployee from "./pages/Functional Pages/AddEmployeeInfo";
+import EditPassword from "./pages/Functional Pages/EditPassword";
+import EditProfileInfo from "./components/Profile/EditProfileInfo";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import EditUsername from "./pages/Functional Pages/EditUsername";
 
 function App() {
   return (
@@ -27,6 +30,8 @@ function App() {
           <Route path="/quote" element={<Quote />} />
           <Route path="/timeclock" element={<TimeClock />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/editusername" element={<EditUsername />} />
+          <Route path="/editpassword" element={<EditPassword />} />
         </Route>
       </Routes>
     </div>

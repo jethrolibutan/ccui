@@ -1,7 +1,7 @@
 import React from "react";
 
 function EditPassword() {
-  return <div></div>;
+  return <div> edit ur password here</div>;
 }
 
 export default EditPassword;
