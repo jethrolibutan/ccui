@@ -19,7 +19,7 @@ function AddEmployee() {
         {
           jwt: localStorage.getItem("jwt"),
           position: position,
-          payRate: payRate,
+          pay_rate: payRate,
         }
       );
 
@@ -27,7 +27,7 @@ function AddEmployee() {
       // Clear the input fields after successful registration
       setPosition("");
       setPayRate("");
-      setTimeout(() => navigate("/addEmployee"), 2000);
+      setTimeout(() => navigate("/dashboard"), 2000);
       console.log("User was created");
     } catch (error) {
       // handle error
