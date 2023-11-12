@@ -45,7 +45,7 @@ function AddEmployee() {
     <div className="form-page">
       <div className="auth-form-container">
         {" "}
-        <h2>Add Employee</h2>{" "}
+        <h2>Add Your Info</h2>{" "}
         <form className="login-form" onSubmit={registerEmployee}>
           <label htmlFor="position">Position</label>
           <input
