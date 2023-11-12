@@ -1,0 +1,14 @@
+.button-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.username-button {
+  margin-right: 1em;
+}
+
+.password-button {
+  margin-left: 1em;
+}

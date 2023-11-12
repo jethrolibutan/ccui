@@ -1,10 +1,30 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./RedirectEdit.css";
 
 function RedirectEdit() {
-  const navigate = Navigate();
+  const navigate = useNavigate();
 
-  return <div></div>;
+  const goToUserName = () => {
+    navigate("/editusername");
+  };
+
+  const goToPassword = () => {
+    navigate("/editpassword");
+  };
+
+  return (
+    <div className="button-list">
+      <button onClick={goToUserName} className="username-button">
+        {" "}
+        Click here to edit your username!{" "}
+      </button>
+      <button onClick={goToPassword} className="password-button">
+        {" "}
+        Click here to edit your password!
+      </button>
+    </div>
+  );
 }
 
 export default RedirectEdit;
