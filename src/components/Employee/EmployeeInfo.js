@@ -19,7 +19,7 @@ function AddEmployee() {
         {
           jwt: localStorage.getItem("jwt"),
           position: position,
-          payRate: payRate,
+          pay_rate: payRate,
         }
       );
 
@@ -27,7 +27,7 @@ function AddEmployee() {
       // Clear the input fields after successful registration
       setPosition("");
       setPayRate("");
-      setTimeout(() => navigate("/addEmployee"), 2000);
+      setTimeout(() => navigate("/dashboard"), 2000);
       console.log("User was created");
     } catch (error) {
       // handle error
@@ -45,7 +45,7 @@ function AddEmployee() {
     <div className="form-page">
       <div className="auth-form-container">
         {" "}
-        <h2>Add Employee</h2>{" "}
+        <h2>Add Your Info</h2>{" "}
         <form className="login-form" onSubmit={registerEmployee}>
           <label htmlFor="position">Position</label>
           <input
