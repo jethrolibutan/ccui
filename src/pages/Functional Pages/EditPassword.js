@@ -116,7 +116,6 @@ export default function EditPassword(props) {
           required
           placeholder="Current Password"
           className="border-1 border-black rounded-md p-1 w-80"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
       </div>

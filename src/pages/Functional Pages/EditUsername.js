@@ -82,9 +82,9 @@ function EditUsername() {
 
       // Check the response message when api requests are returned
       // Re-routes to account page
-      if (data.message === "Current password is incorrect") {
+      if (data.message === "Username already taken") {
         setCorrect(false);
-      } else if (data.message === "Password changed successfully") {
+      } else if (data.message === "Username successfully") {
         setCorrect(true);
         setTimeout(() => navigate("/profile"), 2000);
       }
