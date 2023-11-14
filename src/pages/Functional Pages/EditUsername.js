@@ -67,15 +67,14 @@ function EditUsername() {
   return (
     <div>
       {" "}
-      <h1>Your username is {userName}</h1>{" "}
+      {/* <h1>Your username is {userName}</h1>{" "} */}
       <div className="auth-form-container">
         {" "}
         <h2>Register</h2>{" "}
         <form className="login-form" onSubmit={registerUser}>
           <label htmlFor="username">Username</label>
           <input
-            value={userName}
-            onChange={handleUsernameChange}
+            onChange={setUserName}
             type="username"
             placeholder="********"
             id="username"
