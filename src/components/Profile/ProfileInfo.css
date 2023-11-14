@@ -1,0 +1,23 @@
+.user-box {
+  border: 2px solid #ddd;
+  padding: 20px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  width: 80%; /* Adjust the width as needed */
+  max-width: 600px; /* Optional: set a maximum width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user-box h1 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.user-box div {
+  margin-bottom: 10px;
+}

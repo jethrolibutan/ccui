@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./ProfileInfo.css";
 
 function ProfileInfo() {
   const [firstName, setFirstName] = useState("");
@@ -6,6 +7,7 @@ function ProfileInfo() {
   const [userName, setUsername] = useState("");
   const [position, setPosition] = useState("");
   const [payRate, setPayRate] = useState("");
+  const [id, setId] = useState("");
 
   /**
    * Gets user info
@@ -46,6 +48,7 @@ function ProfileInfo() {
         setUsername(firstUserData.username);
         setPosition(firstUserEmployeeInfo.position);
         setPayRate(firstUserEmployeeInfo.pay_rate);
+        setId(firstUserEmployeeInfo.id);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -57,12 +60,27 @@ function ProfileInfo() {
       <h1>
         Hello {firstName} {lastName}!
       </h1>
-      <h1>Here is your info:</h1>
-      <h2> Username: {userName} </h2>
-      <h2> First Name: {firstName}</h2>
-      <h2> Last Name: {lastName}</h2>
-      <h2> Position: {position}</h2>
-      <h2> Pay Rate: {payRate}</h2>
+      <div className="user-box">
+        <h1>Your Profile Information:</h1>
+        <div>
+          <strong>Username:</strong> {userName}
+        </div>
+        <div>
+          <strong>First Name:</strong> {firstName}
+        </div>
+        <div>
+          <strong>Last Name:</strong> {lastName}
+        </div>
+        <div>
+          <strong>Position:</strong> {position}
+        </div>
+        <div>
+          <strong>Pay Rate:</strong> {payRate}
+        </div>
+        <div>
+          <strong>Your ID:</strong> {id}
+        </div>
+      </div>
     </div>
   );
 }
