@@ -47,11 +47,7 @@ function Navbar() {
 
   return (
     <div>
-      <AppBar
-        position="static"
-        backgroundColor="primary"
-        style={{ background: " #3c3c3c" }}
-      >
+      <AppBar position="static" style={{ background: " #3c3c3c" }}>
         <Toolbar>
           <IconButton
             href="/dashboard"

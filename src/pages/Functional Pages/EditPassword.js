@@ -13,7 +13,7 @@ export default function EditPassword(props) {
   // getting user info
   useEffect(() => {
     (async () => {
-      const apiUrl = "localhost:8000/api/get-user-info/";
+      const apiUrl = "http://localhost:8000/api/get-user-info/";
 
       // Retrieve the JWT token from localStorage
       const jwtToken = localStorage.getItem("jwt");
