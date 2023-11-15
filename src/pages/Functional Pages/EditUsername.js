@@ -93,7 +93,9 @@ export default function EditUsername(props) {
 
   return (
     <div className="flex flex-col items-center justify-center my-20 font-[Montserrat]">
-      <h1 className="text-center text-4xl mb-5 font-bold">Change Password</h1>
+      <h1 className="text-center text-4xl mb-5 font-bold">
+        Change Your Username
+      </h1>
 
       {!correct && (
         <h1 className="p-3 mb-4 rounded-xl text-red-500 font-semibold">
