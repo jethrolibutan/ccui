@@ -69,6 +69,12 @@ function ClockIn() {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center w-100">
       <div className="clock-in-section">
+        <div className="clock-in-heading">
+          <h1 className="text-center mb-2 font-bold">Clock In/Clock Out</h1>
+        </div>
+        <div className="clock-desc">
+          To clock in or out, please enter your employee ID below.
+        </div>
         <div className="employee-id">
           <div className="employee-text"> Enter Employee ID here: </div>
           <input

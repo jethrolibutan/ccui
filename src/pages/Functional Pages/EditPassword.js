@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import "./EditPassword.css";
+import { Toast } from "bootstrap";
 
 export default function EditPassword(props) {
   const [password, setPassword] = useState("");
@@ -89,6 +91,7 @@ export default function EditPassword(props) {
       } else if (data.message === "Password changed successfully") {
         setCorrect(true);
         setTimeout(() => navigate("/profile"), 2000);
+        toast.success("Password changed successfully");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -121,19 +124,6 @@ export default function EditPassword(props) {
 
   return (
     <div className="edit-password-page">
-      {!correct && (
-        <h1 className="p-3 mb-4 rounded-xl text-red-500 font-semibold">
-          {response}
-        </h1>
-      )}
-
-      {correct && (
-        <h1 className="p-3 mb-4 rounded-xl bg-green-300 font-semibold">
-          Password Successfully Changed! You will now be redirected to your
-          account page
-        </h1>
-      )}
-
       <div className="change-username-box">
         <div className="current-password-box">
           <div className="current-password">
@@ -193,6 +183,7 @@ export default function EditPassword(props) {
             </form>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );
