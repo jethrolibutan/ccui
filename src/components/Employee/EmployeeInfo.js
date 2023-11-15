@@ -37,17 +37,24 @@ function AddEmployee() {
 
         setSuccessfulCreation(true);
 
-        if (successfulCreation === true) {
-          toast.success("Employee was successfully created!");
-        }
-
         // Clear the input fields after successful registration
         formik.resetForm();
         setTimeout(() => navigate("/dashboard"), 2000);
         console.log("User was created");
+        toast.success("Employee was successfully created!");
       } catch (error) {
         if (error.response) {
           const status = error.response.status;
+          const responseData = error.response.data;
+
+          console.log(responseData.message);
+          console.log(status);
+
+          if (responseData.message === "Email already taken") {
+            console.log("Email already taken");
+            toast.error("Email already taken");
+          }
+
           if (status === 500) {
             if (values.payRate > 1000) {
               toast.error("Enter a Pay Rate less than 1000");
@@ -59,7 +66,7 @@ function AddEmployee() {
             }
 
             formik.resetForm();
-          }
+          } else if (status === 505) toast.error("Enter a valid pay rate");
         }
       }
     },
