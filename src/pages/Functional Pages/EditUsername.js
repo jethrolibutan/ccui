@@ -56,7 +56,7 @@ const ChangeUsernameForm = () => {
     const requestData = {
       jwt: jwtToken,
       password: formik.values.currentPassword,
-      new_email: formik.values.newUsername,
+      new_username: formik.values.newUsername,
     };
 
     const requestOptions = {
@@ -87,6 +87,20 @@ const ChangeUsernameForm = () => {
         setCorrect(true);
         setTimeout(() => navigate("/profile"), 2000);
       }
+
+      // Reset form fields after successful username change
+      formik.setValues({
+        currentPassword: "",
+        newUsername: "",
+      });
+
+      // Mark form fields as untouched
+      formik.setTouched({
+        currentPassword: false,
+        newUsername: false,
+      });
+
+      setTimeout(() => navigate("/profile"), 2000);
     } catch (error) {
       console.error("Error:", error);
     }
