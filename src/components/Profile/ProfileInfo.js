@@ -48,7 +48,7 @@ function ProfileInfo() {
         setUsername(firstUserData.username);
         setPosition(firstUserEmployeeInfo.position);
         setPayRate(firstUserEmployeeInfo.pay_rate);
-        setId(firstUserEmployeeInfo.id);
+        setId(firstUserEmployeeInfo.user);
       } catch (error) {
         console.error("Error:", error);
       }

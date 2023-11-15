@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import "../Register.css";
 
@@ -9,6 +10,14 @@ function AddEmployee() {
   const [successfulCreation, setSuccessfulCreation] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (successfulCreation) {
+      toast.success(
+        "Employee was successfully created! You will now be redirected to the dashboard."
+      );
+    }
+  }, [successfulCreation]);
 
   const registerEmployee = async (event) => {
     event.preventDefault();
@@ -24,20 +33,24 @@ function AddEmployee() {
       );
 
       setSuccessfulCreation(true);
+
+      if (successfulCreation == true) {
+        toast.success("Employee was successfully created!");
+      }
+
       // Clear the input fields after successful registration
       setPosition("");
       setPayRate("");
       setTimeout(() => navigate("/dashboard"), 2000);
       console.log("User was created");
     } catch (error) {
-      // handle error
-      console.error(error);
-      // Check if the error status is 505
-      if (error.response && error.response.status === 505) {
-        console.log("Email already taken");
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 500) {
+          console.log("Enter in a pay rate less than 1000");
+          toast.error("Enter a Pay Rate less than 1000");
+        }
       }
-
-      setSuccessfulCreation(false);
     }
   };
 
@@ -66,6 +79,7 @@ function AddEmployee() {
           />
           <button type="submit">Register</button>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );
