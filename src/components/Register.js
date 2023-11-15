@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import ToastContainer, { toast } from "react-toastify";
 import axios from "axios";
 import "./Register.css";
 
@@ -16,6 +17,14 @@ function Register() {
   const [succesfulCreation, setSuccessfulCreation] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (succesfulCreation) {
+      toast.success(
+        "You have successfully registered! Now add your position and pay rate."
+      );
+    }
+  }, [succesfulCreation]);
 
   const registerUser = async (event) => {
     event.preventDefault();
