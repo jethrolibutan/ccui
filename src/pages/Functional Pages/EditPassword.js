@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import "./EditPassword.css";
-import { Toast } from "bootstrap";
 
 export default function EditPassword(props) {
   const [password, setPassword] = useState("");
