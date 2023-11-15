@@ -3,14 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  width: auto;
   min-height: 100vh;
 }
 
-/* Apply styles to the ProfileInfo and RedirectEdit components */
-.profile-info-container {
-  margin-bottom: 20px;
+.profile {
+  margin-bottom: 2em;
 }
 
-.edit-container {
-  text-align: center; /* Center the RedirectEdit component */
+.edit {
+  margin-top: 2em;
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./EditUsername.css";
 
 const ChangeUsernameForm = () => {
@@ -12,12 +14,102 @@ const ChangeUsernameForm = () => {
 
   // getting user info
   useEffect(() => {
-    // ... (Your existing useEffect code)
+    const fetchData = async () => {
+      const apiUrl = "http://localhost:8000/api/get-user-info/";
+
+      // Retrieve the JWT token from localStorage
+      const jwtToken = localStorage.getItem("jwt");
+
+      // Data to be sent in the request body
+      const requestData = {
+        jwt: jwtToken,
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      };
+
+      try {
+        const response = await fetch(apiUrl, requestOptions);
+        const data = await response.json();
+
+        setPassword(data[0].password);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const changeUsername = async () => {
-    // ... (Your existing changeUsername code)
+    const apiUrl = "http://localhost:8000/api/change-username/";
+
+    // Retrieve the JWT token from localStorage
+    const jwtToken = localStorage.getItem("jwt");
+
+    // Data to be sent in the request body
+    const requestData = {
+      jwt: jwtToken,
+      password: formik.values.currentPassword,
+      new_email: formik.values.newUsername,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    };
+
+    try {
+      const response = await fetch(apiUrl, requestOptions);
+      const data = await response.json();
+
+      console.log(data);
+      formik.setValues({
+        currentPassword: "",
+        newUsername: "",
+      });
+      formik.setSubmitting(false);
+      setResponse(data.message);
+
+      // Check the response message when API requests are returned
+      // Re-routes to account page
+      if (data.message === "Current password is incorrect") {
+        setCorrect(false);
+      } else if (data.message === "Email changed successfully") {
+        setCorrect(true);
+        setTimeout(() => navigate("/profile"), 2000);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
+  const validationSchema = Yup.object().shape({
+    currentPassword: Yup.string().required("Current password is required"),
+    newUsername: Yup.string()
+      .required("New username is required")
+      .matches(
+        /^[a-zA-Z0-9_.-]*$/,
+        "Username must contain only letters, numbers, underscores, dots, and hyphens"
+      ),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      currentPassword: "",
+      newUsername: "",
+    },
+    validationSchema,
+    onSubmit: changeUsername,
+  });
 
   return (
     <div className="edit-username-page">
@@ -30,7 +122,7 @@ const ChangeUsernameForm = () => {
 
         {correct && (
           <p className="p-3 mb-4 rounded-xl bg-green-300 font-semibold">
-            Password Successfully Changed! You will now be redirected to your
+            Username Successfully Changed! You will now be redirected to your
             account page
           </p>
         )}
@@ -55,8 +147,15 @@ const ChangeUsernameForm = () => {
               required
               placeholder="Current Password"
               className="border-1 border-black rounded-md p-2 w-full"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.currentPassword &&
+              formik.errors.currentPassword && (
+                <div className="text-red-500">
+                  {formik.errors.currentPassword}
+                </div>
+              )}
           </div>
 
           <div className="new-username">
@@ -69,13 +168,20 @@ const ChangeUsernameForm = () => {
               required
               placeholder="New Username"
               className="border-1 border-black rounded-md p-2 w-full"
-              onChange={(e) => setNewEmail(e.target.value)}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.newUsername || newEmail}
             />
+            {formik.touched.newUsername && formik.errors.newUsername && (
+              <div className="text-red-500">{formik.errors.newUsername}</div>
+            )}
           </div>
 
           <button
+            type="submit"
             className="bg-blue-600 mt-4 text-white text-xl font-semibold px-5 py-2 rounded-xl hover:bg-blue-700"
-            onClick={changeUsername}
+            onClick={formik.handleSubmit}
+            disabled={formik.isSubmitting}
           >
             Submit
           </button>

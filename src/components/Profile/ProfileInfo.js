@@ -57,11 +57,11 @@ function ProfileInfo() {
 
   return (
     <div>
-      <h1>
-        Hello {firstName} {lastName}!
-      </h1>
       <div className="user-box">
-        <h1>Your Profile Information:</h1>
+        <h1>
+          Hello {firstName} {lastName}!
+        </h1>
+        <h1> Here is your profile information:</h1>
         <div>
           <strong>Username:</strong> {userName}
         </div>

@@ -6,8 +6,12 @@ import "./ProfilePage.css";
 function ProfilePage() {
   return (
     <div className="profile-page">
-      <ProfileInfo />
-      <RedirectEdit />
+      <div className="profile">
+        <ProfileInfo />
+      </div>
+      <div className="edit">
+        <RedirectEdit />
+      </div>
     </div>
   );
 }
