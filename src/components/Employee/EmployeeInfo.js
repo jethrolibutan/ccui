@@ -45,28 +45,11 @@ function AddEmployee() {
       } catch (error) {
         if (error.response) {
           const status = error.response.status;
-          const responseData = error.response.data;
-
-          console.log(responseData.message);
-          console.log(status);
-
-          if (responseData.message === "Email already taken") {
-            console.log("Email already taken");
-            toast.error("Email already taken");
-          }
-
-          if (status === 500) {
-            if (values.payRate > 1000) {
-              toast.error("Enter a Pay Rate less than 1000");
-              console.log("Enter in a pay rate less than 1000");
-            }
-
-            if (values.position === "" || values.payRate === "") {
-              toast.error("Please fill out all the fields");
-            }
-
-            formik.resetForm();
-          } else if (status === 505) toast.error("Enter a valid pay rate");
+          console.log("Error Status:", status);
+          console.log("Full Error Response:", error.response);
+        } else {
+          console.error("Network error:", error.message);
+          toast.error("Network error. Please check your internet connection.");
         }
       }
     },

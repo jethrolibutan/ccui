@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 import "./Login.css";
 
 function Login() {
@@ -45,6 +46,7 @@ function Login() {
           data.message === "Incorrect Password"
         ) {
           setUserInvalid(true);
+          toast.error("Username or password is incorrect. Please try again.");
         } else {
           const jwtToken = data.jwt; // Assuming the response contains a field named "jwt" with the JWT token.
           localStorage.setItem("jwt", jwtToken); // Store the JWT token in the localStorage.
@@ -89,6 +91,7 @@ function Login() {
           Don't have an account? Register here.
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 }
