@@ -14,10 +14,10 @@ function AddEmployee() {
   useEffect(() => {
     if (successfulCreation) {
       toast.success(
-        "Employee was successfully created! You will now be redirected to the dashboard."
+        "You successfully added your information! You will now be redirected to the dashboard."
       );
     }
-  }, [successfulCreation]);
+  }, [successfulCreation, navigate]);
 
   const registerEmployee = async (event) => {
     event.preventDefault();
@@ -32,23 +32,44 @@ function AddEmployee() {
         }
       );
 
-      setSuccessfulCreation(true);
+      console.log(userRequest.data);
+      console.log(position);
+      console.log(payRate);
 
-      if (successfulCreation == true) {
-        toast.success("Employee was successfully created!");
+      if (position === "") {
+        toast.error("Please fill out the position field");
+      } else if (payRate === "") {
+        toast.error("Please fill out the pay rate field");
+      } else {
+        setSuccessfulCreation(true);
+
+        if (successfulCreation === true) {
+          toast.success("Employee was successfully created!");
+        }
+
+        // Clear the input fields after successful registration
+        setPosition("");
+        setPayRate("");
+        setTimeout(() => navigate("/dashboard"), 2000);
+        console.log("User was created");
       }
-
-      // Clear the input fields after successful registration
-      setPosition("");
-      setPayRate("");
-      setTimeout(() => navigate("/dashboard"), 2000);
-      console.log("User was created");
     } catch (error) {
       if (error.response) {
         const status = error.response.status;
         if (status === 500) {
-          console.log("Enter in a pay rate less than 1000");
-          toast.error("Enter a Pay Rate less than 1000");
+          if (payRate > 1000) {
+            toast.error("Enter a Pay Rate less than 1000");
+            console.log("Enter in a pay rate less than 1000");
+          }
+
+          if (position === "") {
+            toast.error("Please fill out the position field");
+          } else if (payRate === "") {
+            toast.error("Please fill out the pay rate field");
+          }
+
+          setPosition("");
+          setPayRate("");
         }
       }
     }
