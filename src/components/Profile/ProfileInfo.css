@@ -7,8 +7,8 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  width: 80%; /* Adjust the width as needed */
-  max-width: 600px; /* Optional: set a maximum width */
+  width: 80%;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
