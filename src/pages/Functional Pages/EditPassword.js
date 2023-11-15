@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./EditPassword.css";
 
 export default function EditPassword(props) {
   const [password, setPassword] = useState("");
@@ -93,9 +94,7 @@ export default function EditPassword(props) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center my-20 font-[Montserrat]">
-      <h1 className="text-center text-4xl mb-5 font-bold">Change Password</h1>
-
+    <div className="edit-password-page">
       {!correct && (
         <h1 className="p-3 mb-4 rounded-xl text-red-500 font-semibold">
           {response}
@@ -109,35 +108,53 @@ export default function EditPassword(props) {
         </h1>
       )}
 
-      <div className="flex  mb-7">
-        <input
-          type="password"
-          name="password"
-          required
-          placeholder="Current Password"
-          className="border-1 border-black rounded-md p-1 w-80"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-      </div>
+      <div className="change-username-box">
+        <div className="current-password-box">
+          <div className="current-password">
+            <div className="username-heading">
+              <h1 className="text-center mb-2 font-bold">
+                Change Your Password:
+              </h1>
+              <div className="username-desc">
+                To change your password, please confirm your old password and
+                then enter a new password to change your password.
+              </div>
+            </div>
 
-      <div className="flex  mb-7">
-        <input
-          type="password"
-          name="password"
-          required
-          placeholder="New Password"
-          className="border-1 border-black rounded-md p-1 w-80"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        ></input>
-      </div>
+            <div className="old-password">
+              <label className="mb-2">Confirm Current Password</label>
+              <input
+                type="password"
+                name="password"
+                required
+                placeholder="Current Password"
+                className="border-1 border-black rounded-md p-1 w-80"
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+            </div>
+          </div>
+        </div>
 
-      <button
-        className="bg-blue-600 mt-4 text-white text-xl font-semibold px-5 py-2 rounded-xl"
-        onClick={changePassword}
-      >
-        Submit
-      </button>
+        <div className="new-password">
+          <label className="mb-2">Enter New Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="New Password"
+            className="border-1 border-black rounded-md p-1 w-80"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          ></input>
+        </div>
+
+        <button
+          className="bg-blue-600 mt-4 text-white text-xl font-semibold px-5 py-2 rounded-xl"
+          onClick={changePassword}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }

@@ -35,7 +35,7 @@ const ChangeUsernameForm = () => {
           </p>
         )}
 
-        <div className="change-username-box">
+        <div className="edit-username-box">
           <div className="confirm-password">
             <div className="username-heading">
               <h1 className="text-center mb-2 font-bold">
