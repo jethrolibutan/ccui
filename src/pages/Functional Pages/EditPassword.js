@@ -90,7 +90,9 @@ export default function EditPassword(props) {
       } else if (data.message === "Password changed successfully") {
         setCorrect(true);
         setTimeout(() => navigate("/profile"), 2000);
-        toast.success("Password changed successfully");
+        toast.success(
+          "Password changed successfully. You will now be redirected to your account page"
+        );
 
         // Reset form fields after successful username change
         formik.setValues({
