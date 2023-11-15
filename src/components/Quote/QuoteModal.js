@@ -53,7 +53,7 @@ class InvoiceModal extends React.Component {
                 <h6 className="fw-bold mt-1 mb-2">Amount&nbsp;Due:</h6>
                 <h5 className="fw-bold text-secondary">
                   {" "}
-                  {this.props.currency} {this.props.total}
+                  $ {this.props.total}
                 </h5>
               </div>
             </div>
@@ -94,10 +94,10 @@ class InvoiceModal extends React.Component {
                           {item.name} - {item.description}
                         </td>
                         <td className="text-end" style={{ width: "100px" }}>
-                          {this.props.currency} {item.price}
+                          $ {item.price}
                         </td>
                         <td className="text-end" style={{ width: "100px" }}>
-                          {this.props.currency} {item.price * item.quantity}
+                          $ {item.price * item.quantity}
                         </td>
                       </tr>
                     );
@@ -118,7 +118,7 @@ class InvoiceModal extends React.Component {
                       TOTAL
                     </td>
                     <td className="text-end" style={{ width: "100px" }}>
-                      {this.props.currency} {this.props.total}
+                      $ {this.props.total}
                     </td>
                   </tr>
                 </tbody>
