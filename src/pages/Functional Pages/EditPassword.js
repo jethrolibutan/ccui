@@ -1,5 +1,7 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./EditPassword.css";
 
 export default function EditPassword(props) {
@@ -13,7 +15,7 @@ export default function EditPassword(props) {
 
   // getting user info
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       const apiUrl = "http://localhost:8000/api/get-user-info/";
 
       // Retrieve the JWT token from localStorage
@@ -32,25 +34,20 @@ export default function EditPassword(props) {
         body: JSON.stringify(requestData),
       };
 
-      await fetch(apiUrl, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          setPassword(data[0].password);
-          setEmail(data[0].email);
-        })
-        .catch((error) => console.error("Error:", error));
-    })();
+      try {
+        const response = await fetch(apiUrl, requestOptions);
+        const data = await response.json();
+
+        setPassword(data[0].password);
+        setEmail(data[0].email);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  /**
-   * This is the method for sending API request to password changing endpoint
-   *
-   * 1. Make API call
-   * 2. If response is not correct, change incorrect to true
-   * 3. If correct, set to correct
-   * 4. Redirect to account page after 2 seconds
-   *
-   */
   const changePassword = async () => {
     const apiUrl = "http://localhost:8000/api/change-password/";
 
@@ -61,8 +58,8 @@ export default function EditPassword(props) {
     const requestData = {
       jwt: jwtToken,
       email: email,
-      password: password,
-      new_password: newPassword,
+      password: formik.values.password,
+      new_password: formik.values.newPassword,
     };
 
     const requestOptions = {
@@ -78,9 +75,14 @@ export default function EditPassword(props) {
       const data = await response.json();
 
       console.log(data);
+      formik.setValues({
+        password: "",
+        newPassword: "",
+      });
+      formik.setSubmitting(false);
       setResponse(data.message);
 
-      // Check the response message when api requests are returned
+      // Check the response message when API requests are returned
       // Re-routes to account page
       if (data.message === "Current password is incorrect") {
         setCorrect(false);
@@ -93,6 +95,30 @@ export default function EditPassword(props) {
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required("Current password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(256, "Password must not exceed 256 characters"),
+    newPassword: Yup.string()
+      .required("New password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(256, "Password must not exceed 256 characters")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/,
+        "New password must contain at least one uppercase letter, one special character, and one number"
+      ),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      newPassword: "",
+    },
+    validationSchema,
+    onSubmit: changePassword,
+  });
+
   return (
     <div className="edit-password-page">
       {!correct && (
@@ -103,7 +129,7 @@ export default function EditPassword(props) {
 
       {correct && (
         <h1 className="p-3 mb-4 rounded-xl bg-green-300 font-semibold">
-          Password Succesfully Changed! You will now be redirected to your
+          Password Successfully Changed! You will now be redirected to your
           account page
         </h1>
       )}
@@ -121,39 +147,52 @@ export default function EditPassword(props) {
               </div>
             </div>
 
-            <div className="old-password">
-              <label className="mb-2">Confirm Current Password</label>
-              <input
-                type="password"
-                name="password"
-                required
-                placeholder="Current Password"
-                className="border-1 border-black rounded-md p-1 w-80"
-                onChange={(e) => setPassword(e.target.value)}
-              ></input>
-            </div>
+            <form onSubmit={formik.handleSubmit}>
+              <div className="old-password">
+                <label className="mb-2">Confirm Current Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="Current Password"
+                  className="border-1 border-black rounded-md p-1 w-80"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <div className="text-red-500">{formik.errors.password}</div>
+                )}
+              </div>
+
+              <div className="new-password">
+                <label className="mb-2">Enter New Password</label>
+                <input
+                  type="password"
+                  name="newPassword"
+                  required
+                  placeholder="New Password"
+                  className="border-1 border-black rounded-md p-1 w-80"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.newPassword || newPassword}
+                />
+                {formik.touched.newPassword && formik.errors.newPassword && (
+                  <div className="text-red-500">
+                    {formik.errors.newPassword}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="bg-blue-600 mt-4 text-white text-xl font-semibold px-5 py-2 rounded-xl"
+                disabled={formik.isSubmitting}
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
-
-        <div className="new-password">
-          <label className="mb-2">Enter New Password</label>
-          <input
-            type="password"
-            name="password"
-            required
-            placeholder="New Password"
-            className="border-1 border-black rounded-md p-1 w-80"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          ></input>
-        </div>
-
-        <button
-          className="bg-blue-600 mt-4 text-white text-xl font-semibold px-5 py-2 rounded-xl"
-          onClick={changePassword}
-        >
-          Submit
-        </button>
       </div>
     </div>
   );
