@@ -15,9 +15,9 @@ function ClockIn() {
   };
 
   const clockInUser = async (event) => {
-    if(hasInput){
+    if (hasInput) {
       event.preventDefault();
-      try{
+      try {
         const userRequest = await axios.post(
           "http://localhost:8000/api/clock-in/",
           {
@@ -41,9 +41,9 @@ function ClockIn() {
   };
 
   const clockOutUser = async (event) => {
-    if(hasInput){
+    if (hasInput) {
       event.preventDefault();
-      try{
+      try {
         const userRequest = await axios.post(
           "http://localhost:8000/api/clock-out/",
           {
@@ -68,39 +68,41 @@ function ClockIn() {
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center w-100">
-      <div className="employee-id">
-        <div className="employee-text"> Enter Employee ID here: </div>
-        <input
-          type="text"
-          placeholder="Enter ID"
-          value={employeeID}
-          onChange={handleIdChange}
-          className="employee-input"
-          style={{
-            border: "none",
-            borderBottom: "1px solid #000",
-            borderRadius: "0",
-            outline: "none",
-            marginBottom: "10px",
-          }}
-        />{" "}
-      </div>
+      <div className="clock-in-section">
+        <div className="employee-id">
+          <div className="employee-text"> Enter Employee ID here: </div>
+          <input
+            type="text"
+            placeholder="Enter ID"
+            value={employeeID}
+            onChange={handleIdChange}
+            className="employee-input"
+            style={{
+              border: "none",
+              borderBottom: "1px solid #000",
+              borderRadius: "0",
+              outline: "none",
+              marginBottom: "10px",
+            }}
+          />{" "}
+        </div>
 
-      <div className="button-list">
-        <button
-          className="clock-in"
-          style={{ marginRight: "1em" }}
-          onClick={clockInUser}
-        >
-          Clock In
-        </button>
-        <button
-          className="clock-out"
-          style={{ marginLeft: "1em" }}
-          onClick={clockOutUser}
-        >
-          Clock Out
-        </button>
+        <div className="button-list">
+          <button
+            className="clock-in"
+            style={{ marginRight: "1em" }}
+            onClick={clockInUser}
+          >
+            Clock In
+          </button>
+          <button
+            className="clock-out"
+            style={{ marginLeft: "1em" }}
+            onClick={clockOutUser}
+          >
+            Clock Out
+          </button>
+        </div>
       </div>
 
       <ToastContainer />

@@ -22,14 +22,6 @@ const ChangeUsernameForm = () => {
   return (
     <div className="edit-username-page">
       <form className="flex flex-col items-center justify-center my-20 font-[Montserrat]">
-        <div className="username-heading">
-          <h1 className="text-center mb-4 font-bold">Change Your Username</h1>
-          <div className="username-desc">
-            To change your username, please confirm your password and then enter
-            a new email address that is used as your username.
-          </div>
-        </div>
-
         {!correct && (
           <p className="p-3 mb-4 rounded-xl text-red-500 font-semibold">
             {response}
@@ -45,6 +37,15 @@ const ChangeUsernameForm = () => {
 
         <div className="change-username-box">
           <div className="confirm-password">
+            <div className="username-heading">
+              <h1 className="text-center mb-2 font-bold">
+                Change Your Username:
+              </h1>
+            </div>
+            <div className="username-desc">
+              To change your username, please confirm your password and then
+              enter a new email address that is used as your username.
+            </div>
             <label htmlFor="currentPassword" className="mb-2">
               Confirm Current Password
             </label>
