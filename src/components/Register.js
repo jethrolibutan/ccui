@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -54,30 +54,40 @@ function Register() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const userRequest = await axios.post(
-          "http://localhost:8000/api/register/",
-          {
+        const response = await fetch("http://localhost:8000/api/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             first_name: values.firstName,
             last_name: values.lastName,
             email: values.email,
             password: values.password,
-          }
-        );
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
 
-        const { jwt } = userRequest.data;
+            if (data.message === "Email already taken") {
+              formik.setFieldError("emailTaken", true);
+              toast.error("Email already taken, please try again!");
+            } else {
+              const jwtToken = data.jwt; // Assuming the response contains a field named "jwt" with the JWT token.
+              localStorage.setItem("jwt", jwtToken); // Store the JWT token in the localStorage.
+              localStorage.setItem("jwt-exp", Date.now() + 2 * 60 * 60 * 1000); // expiration is checked in Navbar component
 
-        console.log(userRequest.data);
+              setSuccessfulCreation(true);
 
-        localStorage.setItem("jwt", jwt);
-
-        setSuccessfulCreation(true);
-
-        setTimeout(() => navigate("/addEmployee"), 2000);
-        console.log("User was created");
+              setTimeout(() => navigate("/addEmployee"), 2000);
+              console.log("User was created");
+            }
+          });
       } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
 
-        if (error.response && error.response.status === 505) {
+        if (error.status === 505) {
           console.log("Email already taken");
 
           if (formik.values.email === values.email) {
@@ -95,16 +105,13 @@ function Register() {
   return (
     <div className="form-page">
       <div id="error messages">
-        {formik.errors.emailTaken ? (
+        {/* {formik.errors.emailTaken ? (
           <p className="text-red-500 text-center mb-2">
-            The email you entered is already in use!
+            {toast.error(
+              "The email you entered is already in use. Please try Again!"
+            )}
           </p>
-        ) : null}
-        {formik.errors.confirmedPassword && formik.touched.confirmedPassword ? (
-          <p className="text-red-500 text-center mb-2">
-            {formik.errors.confirmedPassword}
-          </p>
-        ) : null}
+        ) : null} */}
       </div>
       <div className="auth-form-container">
         <h2>Register</h2>
@@ -189,6 +196,7 @@ function Register() {
       <button className="link-btn" onClick={goToLogin}>
         Already have an account? Login here.
       </button>
+      <ToastContainer />
     </div>
   );
 }
