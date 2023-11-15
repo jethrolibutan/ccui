@@ -18,10 +18,16 @@ function AddEmployee() {
     },
     validationSchema: Yup.object({
       position: Yup.string().required("Please fill out the position field"),
-      payRate: Yup.string().required("Please fill out the pay rate field"),
+      payRate: Yup.string()
+        .required("Please fill out the pay rate field")
+        .max(1000, "Pay rate must be less than or equal to 1000"),
     }),
     onSubmit: async (values) => {
       try {
+        if (parseInt(values.payRate) > 1000) {
+          toast.error("Pay rate must be less than or equal to 1000");
+          return;
+        }
         const userRequest = await axios.post(
           "http://localhost:8000/api/add-employee-info/",
           {
