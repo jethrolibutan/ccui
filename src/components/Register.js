@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import ToastContainer, { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./Register.css";
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmedPassword, setConfirmedPassword] = useState("");
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-
-  const [emailTaken, setEmailTaken] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
   const [succesfulCreation, setSuccessfulCreation] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,20 +18,49 @@ function Register() {
     }
   }, [succesfulCreation]);
 
-  const registerUser = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    firstName: Yup.string()
+      .min(2, "First Name should be at least 2 characters")
+      .max(32, "First Name should not exceed 32 characters")
+      .required("First Name is required"),
+    lastName: Yup.string()
+      .min(2, "Last Name should be at least 2 characters")
+      .max(32, "Last Name should not exceed 32 characters")
+      .required("Last Name is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password should be at least 8 characters")
+      .max(256, "Password should not exceed 256 characters")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/,
+        "Password must contain at least one uppercase letter, one special character, and one number"
+      )
+      .required("Password is required"),
+    confirmedPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Please confirm your password"),
+  });
 
-    if (password != confirmedPassword) {
-      setPasswordMatch(false);
-    } else {
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmedPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
       try {
         const userRequest = await axios.post(
           "http://localhost:8000/api/register/",
           {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            password: password,
+            first_name: values.firstName,
+            last_name: values.lastName,
+            email: values.email,
+            password: values.password,
           }
         );
 
@@ -47,97 +68,120 @@ function Register() {
 
         console.log(userRequest.data);
 
-        // Store the JWT token in local storage
         localStorage.setItem("jwt", jwt);
 
         setSuccessfulCreation(true);
-        setEmailTaken(false);
-        setEmail(""); // Clear the email input after successful registration
 
         setTimeout(() => navigate("/addEmployee"), 2000);
         console.log("User was created");
       } catch (error) {
-        // handle error
         console.error(error);
-        // Check if the error status is 505
+
         if (error.response && error.response.status === 505) {
           console.log("Email already taken");
 
-          setEmailTaken(true);
-          setEmail("");
-
-          if (emailTaken === true) {
+          if (formik.values.email === values.email) {
             setSuccessfulCreation(false);
           }
         }
       }
-    }
-  };
+    },
+  });
 
   const goToLogin = () => {
     navigate("/login");
   };
+
   return (
     <div className="form-page">
       <div id="error messages">
-        {emailTaken ? (
+        {formik.errors.emailTaken ? (
           <p className="text-red-500 text-center mb-2">
             The email you entered is already in use!
           </p>
         ) : null}
-        {!passwordMatch ? (
+        {formik.errors.confirmedPassword && formik.touched.confirmedPassword ? (
           <p className="text-red-500 text-center mb-2">
-            Passwords do not match!
+            {formik.errors.confirmedPassword}
           </p>
         ) : null}
       </div>
       <div className="auth-form-container">
-        {" "}
-        <h2>Register</h2>{" "}
-        <form className="login-form" onSubmit={registerUser}>
-          <label htmlFor="name">First Name</label>
+        <h2>Register</h2>
+        <form className="login-form" onSubmit={formik.handleSubmit}>
+          <label htmlFor="firstName">First Name</label>
           <input
-            value={firstName}
-            name="name"
-            onChange={(e) => setFirstName(e.target.value)}
-            id="name"
+            id="firstName"
+            name="firstName"
+            type="text"
             placeholder="First Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.firstName}
           />
-          <label htmlFor="name">Last Name</label>
+          {formik.touched.firstName && formik.errors.firstName && (
+            <div className="error-message">{formik.errors.firstName}</div>
+          )}
+
+          <label htmlFor="lastName">Last Name</label>
           <input
-            value={lastName}
-            name="name"
-            onChange={(e) => setLastName(e.target.value)}
-            id="name"
+            id="lastName"
+            name="lastName"
+            type="text"
             placeholder="Last Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.lastName}
           />
-          <label htmlFor="email">email</label>
+          {formik.touched.lastName && formik.errors.lastName && (
+            <div className="error-message">{formik.errors.lastName}</div>
+          )}
+
+          <label htmlFor="email">Email</label>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="youremail@gmail.com"
             id="email"
             name="email"
+            type="email"
+            placeholder="youremail@gmail.com"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
-          <label htmlFor="password">password</label>
+          {formik.touched.email && formik.errors.email && (
+            <div className="error-message">{formik.errors.email}</div>
+          )}
+
+          <label htmlFor="password">Password</label>
           <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="********"
             id="password"
             name="password"
-          />
-          <label htmlFor="password"> confirm password</label>
-          <input
-            value={confirmedPassword}
-            onChange={(e) => setConfirmedPassword(e.target.value)}
             type="password"
             placeholder="********"
-            id="password"
-            name="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
           />
+          {formik.touched.password && formik.errors.password && (
+            <div className="error-message">{formik.errors.password}</div>
+          )}
+
+          <label htmlFor="confirmedPassword">Confirm Password</label>
+          <input
+            id="confirmedPassword"
+            name="confirmedPassword"
+            type="password"
+            placeholder="********"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.confirmedPassword}
+          />
+          {formik.touched.confirmedPassword &&
+            formik.errors.confirmedPassword && (
+              <div className="error-message">
+                {formik.errors.confirmedPassword}
+              </div>
+            )}
+
           <button type="submit">Register</button>
         </form>
       </div>
