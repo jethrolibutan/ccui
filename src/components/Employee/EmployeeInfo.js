@@ -2,45 +2,39 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import * as Yup from "yup"; // Import Yup
+import { useFormik } from "formik"; // Import useFormik from formik library
 import "../Register.css";
 
 function AddEmployee() {
-  const [payRate, setPayRate] = useState("");
-  const [position, setPosition] = useState("");
-  const [successfulCreation, setSuccessfulCreation] = useState(false);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (successfulCreation) {
-      toast.success(
-        "You successfully added your information! You will now be redirected to the dashboard."
-      );
-    }
-  }, [successfulCreation, navigate]);
+  const [successfulCreation, setSuccessfulCreation] = useState(false);
 
-  const registerEmployee = async (event) => {
-    event.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      position: "",
+      payRate: "",
+    },
+    validationSchema: Yup.object({
+      position: Yup.string().required("Please fill out the position field"),
+      payRate: Yup.string().required("Please fill out the pay rate field"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const userRequest = await axios.post(
+          "http://localhost:8000/api/add-employee-info/",
+          {
+            jwt: localStorage.getItem("jwt"),
+            position: values.position,
+            pay_rate: values.payRate,
+          }
+        );
 
-    try {
-      const userRequest = await axios.post(
-        "http://localhost:8000/api/add-employee-info/",
-        {
-          jwt: localStorage.getItem("jwt"),
-          position: position,
-          pay_rate: payRate,
-        }
-      );
+        console.log(userRequest.data);
+        console.log(values.position);
+        console.log(values.payRate);
 
-      console.log(userRequest.data);
-      console.log(position);
-      console.log(payRate);
-
-      if (position === "") {
-        toast.error("Please fill out the position field");
-      } else if (payRate === "") {
-        toast.error("Please fill out the pay rate field");
-      } else {
         setSuccessfulCreation(true);
 
         if (successfulCreation === true) {
@@ -48,56 +42,62 @@ function AddEmployee() {
         }
 
         // Clear the input fields after successful registration
-        setPosition("");
-        setPayRate("");
+        formik.resetForm();
         setTimeout(() => navigate("/dashboard"), 2000);
         console.log("User was created");
-      }
-    } catch (error) {
-      if (error.response) {
-        const status = error.response.status;
-        if (status === 500) {
-          if (payRate > 1000) {
-            toast.error("Enter a Pay Rate less than 1000");
-            console.log("Enter in a pay rate less than 1000");
-          }
+      } catch (error) {
+        if (error.response) {
+          const status = error.response.status;
+          if (status === 500) {
+            if (values.payRate > 1000) {
+              toast.error("Enter a Pay Rate less than 1000");
+              console.log("Enter in a pay rate less than 1000");
+            }
 
-          if (position === "") {
-            toast.error("Please fill out the position field");
-          } else if (payRate === "") {
-            toast.error("Please fill out the pay rate field");
-          }
+            if (values.position === "" || values.payRate === "") {
+              toast.error("Please fill out all the fields");
+            }
 
-          setPosition("");
-          setPayRate("");
+            formik.resetForm();
+          }
         }
       }
-    }
-  };
+    },
+  });
 
   return (
     <div className="form-page">
       <div className="auth-form-container">
-        {" "}
-        <h2>Add Your Info</h2>{" "}
-        <form className="login-form" onSubmit={registerEmployee}>
+        <h2>Add Your Info</h2>
+        <form className="login-form" onSubmit={formik.handleSubmit}>
           <label htmlFor="position">Position</label>
           <input
-            value={position}
-            name="position"
-            onChange={(e) => setPosition(e.target.value)}
             id="position"
+            name="position"
+            type="text"
             placeholder="Position"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.position}
           />
+          {formik.touched.position && formik.errors.position && (
+            <div className="error-message">{formik.errors.position}</div>
+          )}
 
           <label htmlFor="payRate">Pay Rate</label>
           <input
-            value={payRate}
-            name="payRate"
-            onChange={(e) => setPayRate(e.target.value)}
             id="payRate"
+            name="payRate"
+            type="text"
             placeholder="Pay Rate"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.payRate}
           />
+          {formik.touched.payRate && formik.errors.payRate && (
+            <div className="error-message">{formik.errors.payRate}</div>
+          )}
+
           <button type="submit">Register</button>
         </form>
         <ToastContainer />
