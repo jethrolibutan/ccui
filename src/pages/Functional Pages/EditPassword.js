@@ -91,21 +91,21 @@ export default function EditPassword(props) {
         setCorrect(true);
         setTimeout(() => navigate("/profile"), 2000);
         toast.success("Password changed successfully");
+
+        // Reset form fields after successful username change
+        formik.setValues({
+          currentPassword: "",
+          newUsername: "",
+        });
+
+        // Mark form fields as untouched
+        formik.setTouched({
+          currentPassword: false,
+          newUsername: false,
+        });
+
+        setTimeout(() => navigate("/profile"), 2000);
       }
-
-      // Reset form fields after successful username change
-      formik.setValues({
-        currentPassword: "",
-        newUsername: "",
-      });
-
-      // Mark form fields as untouched
-      formik.setTouched({
-        currentPassword: false,
-        newUsername: false,
-      });
-
-      setTimeout(() => navigate("/profile"), 2000);
     } catch (error) {
       console.error("Error:", error);
     }

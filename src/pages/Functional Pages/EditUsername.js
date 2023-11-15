@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./EditUsername.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const ChangeUsernameForm = () => {
   const [password, setPassword] = useState("");
@@ -83,24 +84,26 @@ const ChangeUsernameForm = () => {
       // Re-routes to account page
       if (data.message === "Current password is incorrect") {
         setCorrect(false);
-      } else if (data.message === "Email changed successfully") {
+      } else if (data.message === "Username changed successfully") {
+        // Reset form fields after successful username change
+        formik.setValues({
+          currentPassword: "",
+          newUsername: "",
+        });
+
+        // Mark form fields as untouched
+        formik.setTouched({
+          currentPassword: false,
+          newUsername: false,
+        });
+
         setCorrect(true);
+
+        toast.success(
+          "Username Successfully Changed! You will now be redirected to your account page"
+        );
         setTimeout(() => navigate("/profile"), 2000);
       }
-
-      // Reset form fields after successful username change
-      formik.setValues({
-        currentPassword: "",
-        newUsername: "",
-      });
-
-      // Mark form fields as untouched
-      formik.setTouched({
-        currentPassword: false,
-        newUsername: false,
-      });
-
-      setTimeout(() => navigate("/profile"), 2000);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -110,10 +113,8 @@ const ChangeUsernameForm = () => {
     currentPassword: Yup.string().required("Current password is required"),
     newUsername: Yup.string()
       .required("New username is required")
-      .matches(
-        /^[a-zA-Z0-9_.-]*$/,
-        "Username must contain only letters, numbers, underscores, dots, and hyphens"
-      ),
+
+      .email("Invalid email address"),
   });
 
   const formik = useFormik({
@@ -128,19 +129,6 @@ const ChangeUsernameForm = () => {
   return (
     <div className="edit-username-page">
       <form className="flex flex-col items-center justify-center my-20 font-[Montserrat]">
-        {!correct && (
-          <p className="p-3 mb-4 rounded-xl text-red-500 font-semibold">
-            {response}
-          </p>
-        )}
-
-        {correct && (
-          <p className="p-3 mb-4 rounded-xl bg-green-300 font-semibold">
-            Username Successfully Changed! You will now be redirected to your
-            account page
-          </p>
-        )}
-
         <div className="edit-username-box">
           <div className="confirm-password">
             <div className="username-heading">
@@ -201,6 +189,7 @@ const ChangeUsernameForm = () => {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
