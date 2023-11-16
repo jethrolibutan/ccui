@@ -113,7 +113,11 @@ function UserInventory() {
             <Button
               onClick={() => handleDelete(item.id)}
               variant="outlined"
-              color="secondary"
+              style={{
+                color: "white",
+                backgroundColor: "red",
+                marginRight: "8px",
+              }}
             >
               Delete
             </Button>
@@ -124,6 +128,11 @@ function UserInventory() {
               }}
               variant="outlined"
               color="secondary"
+              style={{
+                color: "white",
+                backgroundColor: "green",
+                marginLeft: "8px",
+              }}
             >
               Update Quantity
             </Button>
@@ -137,6 +146,9 @@ function UserInventory() {
 
   return (
     <div className="inventory-section">
+      <div className="inventory-heading">
+        <h3> Below here is your inventory: </h3>
+      </div>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -184,7 +196,6 @@ function UserInventory() {
               variant="outlined"
               color="primary"
               sx={{ mt: 2 }}
-              // disabled={formik.isSubmitting || !formik.isValid}
             >
               Update Quantity
             </Button>

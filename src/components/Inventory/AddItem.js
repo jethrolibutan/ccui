@@ -78,45 +78,49 @@ function AddItem() {
   return (
     <div className="add-item-form">
       <form onSubmit={formik.handleSubmit}>
-        <Grid
-          container
-          spacing={2}
-          alignItems="center"
-          className="add-item-grid"
-        >
-          <Grid item>
-            <TextField
-              label="Item Name"
-              variant="outlined"
-              value={formik.values.itemName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              name="itemName"
-              error={formik.touched.itemName && Boolean(formik.errors.itemName)}
-              helperText={formik.touched.itemName && formik.errors.itemName}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Item Amount"
-              variant="outlined"
-              value={formik.values.itemAmount}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              name="itemAmount"
-              error={
-                formik.touched.itemAmount && Boolean(formik.errors.itemAmount)
-              }
-              helperText={formik.touched.itemAmount && formik.errors.itemAmount}
-            />
-          </Grid>
+        <div className="add-item-grid">
+          <div className="add-item-text">
+            <h3> Add your Item here:</h3>{" "}
+          </div>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <TextField
+                label="Item Name"
+                variant="outlined"
+                value={formik.values.itemName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="itemName"
+                error={
+                  formik.touched.itemName && Boolean(formik.errors.itemName)
+                }
+                helperText={formik.touched.itemName && formik.errors.itemName}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Item Amount"
+                variant="outlined"
+                value={formik.values.itemAmount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="itemAmount"
+                error={
+                  formik.touched.itemAmount && Boolean(formik.errors.itemAmount)
+                }
+                helperText={
+                  formik.touched.itemAmount && formik.errors.itemAmount
+                }
+              />
+            </Grid>
 
-          <Grid item>
-            <Button type="submit" variant="contained" color="primary">
-              Add Item
-            </Button>
+            <Grid item>
+              <Button type="submit" variant="contained" color="primary">
+                Add Item
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </form>
 
       <ToastContainer />
