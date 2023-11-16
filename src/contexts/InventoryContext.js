@@ -30,7 +30,7 @@ export const InventoryProvider = ({ children }) => {
   const updateQuantity = (itemId, newQuantity) => {
     setInventory((prevInventory) =>
       prevInventory.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
+        item.id === itemId ? { ...item, itemAmount: newQuantity } : item
       )
     );
   };

@@ -92,7 +92,6 @@ function UserInventory() {
         setSelectedItemId(null);
 
         updateQuantity(selectedItemId, parseInt(formik.values.newQuantity, 10));
-
         console.log("Quantity updated successfully.");
       } else {
         console.log("Failed to update quantity.");
