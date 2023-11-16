@@ -5,8 +5,8 @@ import UserInventory from "../../components/Inventory/UserInventory";
 function Inventory() {
   return (
     <div>
-      <UserInventory />
       <AddItem />
+      <UserInventory />
     </div>
   );
 }

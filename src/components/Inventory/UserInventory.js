@@ -106,7 +106,6 @@ function UserInventory() {
     return inventory.map((item) => {
       return (
         <TableRow key={item.id}>
-          <TableCell>{item.id}</TableCell>
           <TableCell>{item.itemName}</TableCell>
           <TableCell>{item.itemAmount}</TableCell>
           <TableCell>
@@ -153,7 +152,6 @@ function UserInventory() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Item Name</TableCell>
               <TableCell>Item Amount</TableCell>
             </TableRow>
