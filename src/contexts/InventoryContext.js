@@ -17,7 +17,6 @@ export const InventoryProvider = ({ children }) => {
   const isMounted = useRef(true);
 
   const updateInventory = (newItem) => {
-    console.log("this is the new item", newItem);
     setInventory((prevInventory) => [...prevInventory, newItem]);
     return [...inventory, newItem];
   };

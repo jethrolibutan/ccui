@@ -37,12 +37,13 @@ function AddItem() {
 
       // Get the ID of the newly added item
       const lastAddedItemId = getLastAddedItemId();
+      const counter = lastAddedItemId + 1;
 
       // Use the ID or update your UI accordingly
       console.log("Last added item ID:", lastAddedItemId);
 
       const itemDisplay = {
-        id: lastAddedItemId,
+        id: counter,
         itemName: values.itemName,
         itemAmount: values.itemAmount,
       };
