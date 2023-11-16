@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./AddItem.css";
 import { Toast } from "bootstrap";
+import "./AddItem.css";
 
 function AddItem() {
   const [tempInventory, setTempInventory] = useState([]);
@@ -77,7 +78,12 @@ function AddItem() {
   return (
     <div className="add-item-form">
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={2} alignItems="center">
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          className="add-item-grid"
+        >
           <Grid item>
             <TextField
               label="Item Name"

@@ -4,3 +4,9 @@
   justify-content: center;
   margin: 1em;
 }
+
+.add-item-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
