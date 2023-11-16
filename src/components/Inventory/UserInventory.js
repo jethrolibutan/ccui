@@ -7,12 +7,32 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
 } from "@mui/material";
 import "./UserInventory.css";
 import axios from "axios";
 
 function UserInventory() {
   const [inventory, setInventory] = useState([]);
+
+  const handleDelete = async (itemId) => {
+    console.log(itemId);
+
+    const userRequest = await axios
+      .post(`http://localhost:8000/api/delete-item/`, {
+        jwt: localStorage.getItem("jwt"),
+        item_id: itemId,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const updateQuantity = (itemId) => {};
 
   useEffect(() => {
     (async () => {
@@ -52,6 +72,22 @@ function UserInventory() {
         <TableCell>{item.id}</TableCell>
         <TableCell>{item.itemName}</TableCell>
         <TableCell>{item.itemAmount}</TableCell>
+        <TableCell>
+          <Button
+            onClick={() => handleDelete(item.id)}
+            variant="outlined"
+            color="secondary"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => handleDelete(item.id)}
+            variant="outlined"
+            color="secondary"
+          >
+            Update Quantity
+          </Button>
+        </TableCell>
       </TableRow>
     ));
   };
