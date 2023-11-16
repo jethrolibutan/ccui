@@ -52,6 +52,8 @@ function AddItem() {
         .catch((error) => console.error("Error:", error));
 
       console.log(itemData);
+
+      formik.resetForm();
     },
   });
 
