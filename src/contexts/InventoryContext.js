@@ -27,6 +27,14 @@ export const InventoryProvider = ({ children }) => {
     );
   };
 
+  const updateQuantity = (itemId, newQuantity) => {
+    setInventory((prevInventory) =>
+      prevInventory.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   const fetchData = async () => {
     const apiUrl1 = "http://localhost:8000/api/items/";
     const jwtToken = localStorage.getItem("jwt");
@@ -78,6 +86,7 @@ export const InventoryProvider = ({ children }) => {
       value={{
         inventory,
         updateInventory,
+        updateQuantity,
         deleteItem,
         getLastAddedItemId: () =>
           inventory.length > 0 ? inventory[inventory.length - 1].id : null,

@@ -19,7 +19,7 @@ import "./UserInventory.css";
 import axios from "axios";
 
 function UserInventory() {
-  const { inventory, deleteItem } = useInventory();
+  const { inventory, deleteItem, updateQuantity } = useInventory();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
@@ -90,6 +90,8 @@ function UserInventory() {
         // Enable the "Update Quantity" button
         setIsModalOpen(false);
         setSelectedItemId(null);
+
+        updateQuantity(selectedItemId, parseInt(formik.values.newQuantity, 10));
 
         console.log("Quantity updated successfully.");
       } else {
