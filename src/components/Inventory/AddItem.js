@@ -2,68 +2,87 @@ import React, { useState } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "./AddItem.css";
+import { Toast } from "bootstrap";
 
 function AddItem() {
-  const [itemName, setItemName] = useState("");
-  const [itemAmount, setItemAmount] = useState("");
+  const validationSchema = Yup.object().shape({
+    itemName: Yup.string().required("Item Name is required"),
+    itemAmount: Yup.number()
+      .positive("Item Amount must be a positive number")
+      .required("Item Amount is required"),
+  });
 
-  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: {
+      itemName: "",
+      itemAmount: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      const apiUrl = "http://localhost:8000/api/create-new-item/";
 
-  const addItem = async (event) => {
-    event.preventDefault();
+      const itemData = {
+        jwt: localStorage.getItem("jwt"),
+        item_name: values.itemName,
+        item_amount: values.itemAmount,
+      };
 
-    const apiUrl = "http://localhost:8000/api/create-new-item/";
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(itemData),
+      };
 
-    const itemData = {
-      jwt: localStorage.getItem("jwt"),
-      item_name: itemName,
-      item_amount: itemAmount,
-    };
+      const addItemRequest = await fetch(apiUrl, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(itemData),
-    };
+          console.log(data.message);
 
-    console.log(itemData);
+          if (data.message === "Item added successfully!") {
+            toast.success("Item added successfully!");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
 
-    const addItemRequest = await fetch(apiUrl, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-
-        console.log(data.message);
-
-        if (data.message === "Item added successfully!") {
-          toast.success("Item added successfully!");
-        }
-      })
-      .catch((error) => console.error("Error:", error));
-
-    // Handle the success case, e.g., show a success message or update state
-  };
+      console.log(itemData);
+    },
+  });
 
   return (
-    <div>
-      <form onSubmit={addItem}>
+    <div className="add-item-form">
+      <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
             <TextField
               label="Item Name"
               variant="outlined"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
+              value={formik.values.itemName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              name="itemName"
+              error={formik.touched.itemName && Boolean(formik.errors.itemName)}
+              helperText={formik.touched.itemName && formik.errors.itemName}
             />
           </Grid>
           <Grid item>
             <TextField
               label="Item Amount"
               variant="outlined"
-              value={itemAmount}
-              onChange={(e) => setItemAmount(e.target.value)}
+              value={formik.values.itemAmount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              name="itemAmount"
+              error={
+                formik.touched.itemAmount && Boolean(formik.errors.itemAmount)
+              }
+              helperText={formik.touched.itemAmount && formik.errors.itemAmount}
             />
           </Grid>
 
@@ -74,6 +93,7 @@ function AddItem() {
           </Grid>
         </Grid>
       </form>
+
       <ToastContainer />
     </div>
   );
