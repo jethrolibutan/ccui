@@ -16,6 +16,8 @@ import axios from "axios";
 function UserInventory() {
   const { inventory } = useInventory();
 
+  // console.log("this is the inventory", inventory);
+
   const handleDelete = async (itemId) => {
     console.log(itemId);
 
@@ -36,29 +38,33 @@ function UserInventory() {
   const updateQuantity = (itemId) => {};
 
   const renderTableRows = () => {
-    return inventory.map((item) => (
-      <TableRow key={item.id}>
-        <TableCell>{item.id}</TableCell>
-        <TableCell>{item.itemName}</TableCell>
-        <TableCell>{item.itemAmount}</TableCell>
-        <TableCell>
-          <Button
-            onClick={() => handleDelete(item.id)}
-            variant="outlined"
-            color="secondary"
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={() => handleDelete(item.id)}
-            variant="outlined"
-            color="secondary"
-          >
-            Update Quantity
-          </Button>
-        </TableCell>
-      </TableRow>
-    ));
+    return inventory.map((item) => {
+      // console.log(item);
+
+      return (
+        <TableRow key={item.id}>
+          <TableCell>{item.id}</TableCell>
+          <TableCell>{item.itemName}</TableCell>
+          <TableCell>{item.itemAmount}</TableCell>
+          <TableCell>
+            <Button
+              onClick={() => handleDelete(item.id)}
+              variant="outlined"
+              color="secondary"
+            >
+              Delete
+            </Button>
+            <Button
+              onClick={() => handleDelete(item.id)}
+              variant="outlined"
+              color="secondary"
+            >
+              Update Quantity
+            </Button>
+          </TableCell>
+        </TableRow>
+      );
+    });
   };
 
   return (

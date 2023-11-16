@@ -35,6 +35,11 @@ function AddItem() {
         item_amount: values.itemAmount,
       };
 
+      const itemDisplay = {
+        itemName: values.itemName,
+        itemAmount: values.itemAmount,
+      };
+
       const requestOptions = {
         method: "POST",
         headers: {
@@ -46,19 +51,16 @@ function AddItem() {
       const addItemRequest = await fetch(apiUrl, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-
-          console.log(data.message);
+          // console.log(data);
+          // console.log(data.message);
 
           if (data.message === "Item added successfully!") {
             toast.success("Item added successfully!");
-            updateInventory(itemData);
+            updateInventory(itemDisplay);
+            console.log(itemData);
           }
         })
         .catch((error) => console.error("Error:", error));
-
-      console.log(itemData);
-
       formik.resetForm();
     },
   });
