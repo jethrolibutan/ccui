@@ -11,6 +11,7 @@ import Profile from "./pages/Functional Pages/ProfilePage";
 import AddEmployee from "./pages/Functional Pages/AddEmployeeInfo";
 import EditPassword from "./pages/Functional Pages/EditPassword";
 import EditProfileInfo from "./components/Profile/EditProfileInfo";
+import UserClocks from "./components/Time Clock/UserClocks";
 import { InventoryProvider } from "./contexts/InventoryContext";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/editusername" element={<EditUsername />} />
             <Route path="/editpassword" element={<EditPassword />} />
+            <Route path="/viewclocks" element={<UserClocks />} />
           </Route>
         </Routes>
       </InventoryProvider>
