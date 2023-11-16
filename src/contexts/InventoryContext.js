@@ -53,7 +53,6 @@ export const InventoryProvider = ({ children }) => {
       // Check if the component is still mounted before updating state
       if (isMounted.current) {
         setInventory(response.data);
-        console.log("this is the temp inv", response.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -69,17 +68,6 @@ export const InventoryProvider = ({ children }) => {
       isMounted.current = false;
     };
   }, []);
-
-  const contextValue = useMemo(
-    () => ({
-      inventory,
-      updateInventory,
-      deleteItem,
-      getLastAddedItemId: () =>
-        inventory.length > 0 ? inventory[inventory.length - 1]?.id : null,
-    }),
-    [inventory, updateInventory, deleteItem] // Dependencies for useMemo
-  );
 
   return (
     <InventoryContext.Provider
