@@ -9,11 +9,12 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import { useInventory } from "../../contexts/InventoryContext";
 import "./UserInventory.css";
 import axios from "axios";
 
 function UserInventory() {
-  const [inventory, setInventory] = useState([]);
+  const { inventory } = useInventory();
 
   const handleDelete = async (itemId) => {
     console.log(itemId);
@@ -33,38 +34,6 @@ function UserInventory() {
   };
 
   const updateQuantity = (itemId) => {};
-
-  useEffect(() => {
-    (async () => {
-      const apiUrl = "http://localhost:8000/api/items/";
-
-      // Retrieve the JWT token from localStorage
-      const jwtToken = localStorage.getItem("jwt");
-
-      // Data to be sent in the request body
-      const requestData = {
-        jwt: jwtToken,
-      };
-
-      const requestOptions = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      };
-
-      try {
-        const response = await axios.get(apiUrl, requestOptions);
-        const data = response.data;
-
-        setInventory(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    })();
-  }, []);
 
   const renderTableRows = () => {
     return inventory.map((item) => (

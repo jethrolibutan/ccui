@@ -1,6 +1,7 @@
 // /context/InventoryContext.js
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const InventoryContext = createContext();
 
@@ -16,6 +17,33 @@ export const InventoryProvider = ({ children }) => {
       prevInventory.filter((item) => item.id !== itemId)
     );
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const apiUrl1 = "http://localhost:8000/api/items/";
+      const jwtToken = localStorage.getItem("jwt");
+
+      const requestOptions1 = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      };
+
+      try {
+        const response = await axios.get(apiUrl1, requestOptions1);
+        const data = response.data;
+
+        setInventory(data);
+        console.log("this is the temp inv", inventory);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <InventoryContext.Provider

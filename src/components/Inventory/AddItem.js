@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
+import { useInventory } from "../../contexts/InventoryContext";
+import axios from "axios";
 import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,6 +10,9 @@ import "./AddItem.css";
 import { Toast } from "bootstrap";
 
 function AddItem() {
+  const [tempInventory, setTempInventory] = useState([]);
+  const { updateInventory } = useInventory();
+
   const validationSchema = Yup.object().shape({
     itemName: Yup.string().required("Item Name is required"),
     itemAmount: Yup.number()
@@ -47,6 +52,7 @@ function AddItem() {
 
           if (data.message === "Item added successfully!") {
             toast.success("Item added successfully!");
+            updateInventory(itemData);
           }
         })
         .catch((error) => console.error("Error:", error));
