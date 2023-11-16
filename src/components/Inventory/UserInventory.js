@@ -72,7 +72,7 @@ function UserInventory() {
         {
           jwt: localStorage.getItem("jwt"),
           item_id: selectedItemId,
-          new_quantity: formik.values.newQuantity,
+          item_amount: formik.values.newQuantity,
         }
       );
 
