@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, TextField, Grid } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 function AddItem() {
-  const [item_name, setItemName] = useState("");
-  const [item_amount, setItemAmount] = useState("");
-  const [item_owner, setItemOwner] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [itemAmount, setItemAmount] = useState("");
+
+  const navigate = useNavigate();
 
   const addItem = async (event) => {
     event.preventDefault();
@@ -13,9 +16,8 @@ function AddItem() {
 
     const itemData = {
       jwt: localStorage.getItem("jwt"),
-      item_name: item_name,
-      item_amount: item_amount,
-      item_owner: item_owner,
+      item_name: itemName,
+      item_amount: itemAmount,
     };
 
     const requestOptions = {
@@ -25,11 +27,54 @@ function AddItem() {
       },
       body: JSON.stringify(itemData),
     };
+
+    console.log(itemData);
+
+    const addItemRequest = await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        console.log(data.message);
+
+        if (data.message === "Item added successfully!") {
+          toast.success("Item added successfully!");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+
+    // Handle the success case, e.g., show a success message or update state
   };
 
   return (
     <div>
-      <Button> Add Item</Button>
+      <form onSubmit={addItem}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item>
+            <TextField
+              label="Item Name"
+              variant="outlined"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Item Amount"
+              variant="outlined"
+              value={itemAmount}
+              onChange={(e) => setItemAmount(e.target.value)}
+            />
+          </Grid>
+
+          <Grid item>
+            <Button type="submit" variant="contained" color="primary">
+              Add Item
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+      <ToastContainer />
     </div>
   );
 }
