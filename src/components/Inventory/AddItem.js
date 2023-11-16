@@ -11,7 +11,7 @@ import { Toast } from "bootstrap";
 
 function AddItem() {
   const [tempInventory, setTempInventory] = useState([]);
-  const { updateInventory } = useInventory();
+  const { updateInventory, getLastAddedItemId } = useInventory();
 
   const validationSchema = Yup.object().shape({
     itemName: Yup.string().required("Item Name is required"),
@@ -35,7 +35,14 @@ function AddItem() {
         item_amount: values.itemAmount,
       };
 
+      // Get the ID of the newly added item
+      const lastAddedItemId = getLastAddedItemId();
+
+      // Use the ID or update your UI accordingly
+      console.log("Last added item ID:", lastAddedItemId);
+
       const itemDisplay = {
+        id: lastAddedItemId,
         itemName: values.itemName,
         itemAmount: values.itemAmount,
       };
@@ -51,11 +58,12 @@ function AddItem() {
       const addItemRequest = await fetch(apiUrl, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
-          // console.log(data.message);
+          console.log(data);
+          console.log(data.message);
 
           if (data.message === "Item added successfully!") {
             toast.success("Item added successfully!");
+
             updateInventory(itemDisplay);
             console.log(itemData);
           }

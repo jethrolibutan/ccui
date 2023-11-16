@@ -39,7 +39,7 @@ function UserInventory() {
 
   const renderTableRows = () => {
     return inventory.map((item) => {
-      // console.log(item);
+      console.log(item);
 
       return (
         <TableRow key={item.id}>
