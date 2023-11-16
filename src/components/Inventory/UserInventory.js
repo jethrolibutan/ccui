@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import "./UserInventory.css";
 import axios from "axios";
 
 function UserInventory() {
@@ -56,7 +57,7 @@ function UserInventory() {
   };
 
   return (
-    <div>
+    <div className="inventory-section">
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
