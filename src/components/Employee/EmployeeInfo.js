@@ -20,7 +20,15 @@ function AddEmployee() {
       position: Yup.string().required("Please fill out the position field"),
       payRate: Yup.string()
         .required("Please fill out the pay rate field")
-        .max(1000, "Pay rate must be less than or equal to 1000"),
+        .max(1000, "Pay rate must be less than or equal to 1000")
+        .test(
+          "is-valid-rate",
+          "Pay rate must be a number below 1000",
+          (value) => {
+            const numericValue = parseFloat(value);
+            return !isNaN(numericValue) && numericValue < 1000;
+          }
+        ),
     }),
     onSubmit: async (values) => {
       try {
@@ -47,7 +55,9 @@ function AddEmployee() {
         formik.resetForm();
         setTimeout(() => navigate("/dashboard"), 2000);
         console.log("User was created");
-        toast.success("Employee was successfully created!");
+        toast.success(
+          "Employee was successfully created! You will now be redirected to the dashboard."
+        );
       } catch (error) {
         if (error.response) {
           const status = error.response.status;

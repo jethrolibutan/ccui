@@ -82,7 +82,12 @@ const ChangeUsernameForm = () => {
 
       // Check the response message when API requests are returned
       // Re-routes to account page
-      if (data.message === "Current password is incorrect") {
+      if (
+        data.message === "Current password is incorrect" ||
+        data.message === "Username already taken"
+      ) {
+        toast.error(data.message);
+        toast.error("Please try again");
         setCorrect(false);
       } else if (data.message === "Username changed successfully") {
         // Reset form fields after successful username change
@@ -151,6 +156,7 @@ const ChangeUsernameForm = () => {
               className="border-1 border-black rounded-md p-2 w-full"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              value={formik.isSubmitting ? "" : formik.values.currentPassword}
             />
             {formik.touched.currentPassword &&
               formik.errors.currentPassword && (
@@ -174,6 +180,7 @@ const ChangeUsernameForm = () => {
               onBlur={formik.handleBlur}
               value={formik.values.newUsername || newEmail}
             />
+
             {formik.touched.newUsername && formik.errors.newUsername && (
               <div className="text-red-500">{formik.errors.newUsername}</div>
             )}
