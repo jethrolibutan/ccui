@@ -111,7 +111,7 @@ function UserClocks() {
             <TableHead>
               <TableRow>
                 <TableCell>Clock Type:</TableCell>
-                <TableCell>Date and Time:</TableCell>
+                <TableCell>Time:</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{renderTableRows()}</TableBody>

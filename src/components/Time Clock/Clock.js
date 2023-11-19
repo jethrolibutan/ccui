@@ -26,7 +26,6 @@ function ClockIn() {
           }
         );
         setEmployeeID("");
-        console.log("User was clocked in");
         toast.success(`Employee #${employeeID} was clocked in`);
       } catch (error) {
         console.error(error);
