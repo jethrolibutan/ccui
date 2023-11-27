@@ -17,6 +17,7 @@ class InvoiceForm extends React.Component {
       currentDate: "",
       invoiceNumber: 1,
       dateOfIssue: "",
+      invoiceNumber: 1,
       billTo: "",
       billToEmail: "",
       billToAddress: "",
@@ -63,27 +64,15 @@ class InvoiceForm extends React.Component {
     this.setState(this.state.items);
   }
   handleCalculateTotal() {
-    var items = this.state.items;
-    var subTotal = 0;
+    const items = this.state.items;
+    let subTotal = 0;
 
-    items.map(function (items) {
-      subTotal = parseFloat(
-        subTotal + parseFloat(items.price).toFixed(2) * parseInt(items.quantity)
-      ).toFixed(2);
+    items.forEach((item) => {
+      subTotal += parseFloat(item.price) * parseInt(item.quantity);
     });
 
-    this.setState(() => {
-      this.setState(() => {
-        this.setState(() => {
-          this.setState({
-            total:
-              subTotal -
-              this.state.discountAmmount +
-              parseFloat(this.state.taxAmmount),
-          });
-        });
-      });
-    });
+    const total = subTotal.toFixed(2);
+    this.setState({ total });
   }
   onItemizedItemEdit(evt) {
     var item = {
@@ -108,9 +97,6 @@ class InvoiceForm extends React.Component {
       [event.target.name]: event.target.value,
     });
     this.handleCalculateTotal();
-  };
-  onCurrencyChange = (selectedOption) => {
-    this.setState(selectedOption);
   };
   openModal = (event) => {
     event.preventDefault();
@@ -155,7 +141,7 @@ class InvoiceForm extends React.Component {
                   <Form.Control
                     type="number"
                     value={this.state.invoiceNumber}
-                    name={"invoiceNumber"}
+                    name={"Invoice"}
                     onChange={(event) => this.editField(event)}
                     min="1"
                     style={{
@@ -220,7 +206,6 @@ class InvoiceForm extends React.Component {
                 onItemizedItemEdit={this.onItemizedItemEdit.bind(this)}
                 onRowAdd={this.handleAddEvent.bind(this)}
                 onRowDel={this.handleRowDel.bind(this)}
-                currency={this.state.currency}
                 items={this.state.items}
               />
               <Row className="mt-4 justify-content-end">
@@ -259,17 +244,14 @@ class InvoiceForm extends React.Component {
                 type="submit"
                 className="d-block w-100 btn-secondary"
               >
-                Review Invoice
+                Finalize Invoice
               </Button>
               <InvoiceModal
                 showModal={this.state.isOpen}
                 closeModal={this.closeModal}
                 info={this.state}
                 items={this.state.items}
-                currency={this.state.currency}
                 subTotal={this.state.subTotal}
-                taxAmmount={this.state.taxAmmount}
-                discountAmmount={this.state.discountAmmount}
                 total={this.state.total}
               />
             </div>
