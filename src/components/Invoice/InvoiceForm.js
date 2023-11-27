@@ -15,9 +15,8 @@ class InvoiceForm extends React.Component {
       isOpen: false,
       currency: "$",
       currentDate: "",
-      invoiceNumber: 1,
+      invoiceNumber: "",
       dateOfIssue: "",
-      invoiceNumber: 1,
       billTo: "",
       billToEmail: "",
       billToAddress: "",
@@ -141,7 +140,7 @@ class InvoiceForm extends React.Component {
                   <Form.Control
                     type="number"
                     value={this.state.invoiceNumber}
-                    name={"Invoice"}
+                    name={"invoiceNumber"}
                     onChange={(event) => this.editField(event)}
                     min="1"
                     style={{
